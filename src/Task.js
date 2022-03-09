@@ -9,7 +9,7 @@ function Task(props) {
             {props.editingTaskId === props.id ?
                 <input className={props.id === props.editingTaskId ? "task editing" : "task"}
                        onChange={
-                           (e) => props.onEditTask(props.id, e.target.value)
+                           (e) => props.onEditTask(props.id, "name", e.target.value)
                        }
                        value={props.text}></input> :
                 <span className="taskName">{props.text}</span>
