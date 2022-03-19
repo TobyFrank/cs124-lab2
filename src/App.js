@@ -60,7 +60,7 @@ function App() {
     const order = "name";
     const ascDesc = "asc";
     const q = query(collection(db, collectionName), orderBy(order, ascDesc));
-    const [taskList, setTaskList] = useCollectionData(q);
+    const [taskList, loading, error] = useCollectionData(q);
 
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
@@ -121,6 +121,9 @@ function App() {
         setShowAlert(!showAlert);
     }
 
+    if (loading) {
+        return <div className={"loading"}>Loading Task List...</div>
+    }
     return (
         <div className={"app"}>
             <div className={"header"}>
