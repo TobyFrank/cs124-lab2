@@ -60,7 +60,7 @@ function App() {
     const order = "name";
     const ascDesc = "asc";
     const q = query(collection(db, collectionName), orderBy(order, ascDesc));
-    const [taskList, loading, error] = useCollectionData(q);
+    const [taskList, loading] = useCollectionData(q);
 
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
