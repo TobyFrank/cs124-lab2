@@ -10,7 +10,7 @@ import Alert from "./Alert.js";
 import Tasks from "./Tasks.js";
 
 import { initializeApp } from "firebase/app";
-import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy } from "firebase/firestore";
+import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy, updateDoc } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const firebaseConfig = {
@@ -36,9 +36,19 @@ function App() {
     const q = query(collection(db, collectionName), orderBy(order, ascDesc));
     const [taskList, loading] = useCollectionData(q);
 
+    // function debounce(func, timeout = 300){
+    //     let timer;
+    //     return (...args) => {
+    //         clearTimeout(timer);
+    //         timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    //     };
+    // }
+
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
-            {[field]: value}, {merge: true}).then(doc => console.log(doc[value]));
+            {[field]: value},
+            {merge: true}).then(() => console.log("edit"));
+        handleEditTaskToggle(taskId);
     }
 
     function handleSetCompletedTask(taskId) {
@@ -54,8 +64,8 @@ function App() {
         }
     }
 
-    function handleDeleteTask(taskId, deleteAll) {
-        if (deleteAll) {
+    function handleDeleteTask(taskId, ifDeleteAll) {
+        if (ifDeleteAll) {
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
             deleteDoc(doc(db, collectionName, taskId))
@@ -93,10 +103,10 @@ function App() {
                         Are you sure you want to delete this task?
                     </div>
                 </Alert>}
-                <Tasks taskList={taskList} editingTaskId={editingTaskId}
+                <Tasks taskList={taskList}
+                       editingTaskId={editingTaskId}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
-                       onToggleEditTaskId={handleEditTaskToggle}
                        onDeleteTask={handleDeleteTask}
                        toggleModal={toggleModal}
                        showAlert={showAlert}></Tasks>

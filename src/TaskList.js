@@ -9,24 +9,22 @@ function TaskList(props) {
                 <div>Oops! Looks like you have no tasks.</div> :
                 <div>
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
-                                                                                      text={task.text}
-                                                                                      id={task.id}
+                                                                                      taskData={task}
                                                                                       isChecked={task.completed}
                                                                                       editingTaskId={props.editingTaskId}
+                                                                                      editingTaskText={props.editingTaskText}
                                                                                       onEditTask={props.onEditTask}
                                                                                       onCompletedTask={props.onCompletedTask}
-                                                                                      onToggleEditTaskId={props.onToggleEditTaskId}
                                                                                       onDeleteTask={props.onDeleteTask}
                                                                                       toggleModal={props.toggleModal}/>)
                     }
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
-                                                                                     text={task.text}
-                                                                                     id={task.id}
-                                                                                     isChecked={props.completedTaskList.includes(task.id)}
+                                                                                     taskData={task}
+                                                                                     isChecked={task.completed}
                                                                                      editingTaskId={props.editingTaskId}
+                                                                                     editingTaskText={props.editingTaskText}
                                                                                      onEditTask={props.onEditTask}
                                                                                      onCompletedTask={props.onCompletedTask}
-                                                                                     onToggleEditTaskId={props.onToggleEditTaskId}
                                                                                      onDeleteTask={props.onDeleteTask}
                                                                                      toggleModal={props.toggleModal}/>)
                     }

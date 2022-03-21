@@ -15,9 +15,9 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Incomplete" taskList={props.taskList.filter(task => !task.completed)}
                           editingTaskId={props.editingTaskId}
+                          editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
                           onCompletedTask={props.onCompletedTask}
-                          onToggleEditTaskId={props.onToggleEditTaskId}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={false}></TaskList>
@@ -25,9 +25,9 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="All" taskList={props.taskList}
                           editingTaskId={props.editingTaskId}
+                          editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
                           onCompletedTask={props.onCompletedTask}
-                          onToggleEditTaskId={props.onToggleEditTaskId}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={true}></TaskList>
@@ -35,9 +35,9 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Complete" taskList={props.taskList.filter(task => task.completed)}
                           editingTaskId={props.editingTaskId}
+                          editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
                           onCompletedTask={props.onCompletedTask}
-                          onToggleEditTaskId={props.onToggleEditTaskId}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={true}></TaskList>
