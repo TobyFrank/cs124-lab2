@@ -8,8 +8,7 @@ function TaskList(props) {
             {props.taskList.length === 0 ?
                 <div>Oops! Looks like you have no tasks.</div> :
                 <div>
-                    {props.taskList.filter(task =>
-                        !props.completedTaskList.includes(task.id)).map(task => <Task key={task.id}
+                    {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       text={task.text}
                                                                                       id={task.id}
                                                                                       isChecked={task.completed}
@@ -20,8 +19,7 @@ function TaskList(props) {
                                                                                       onDeleteTask={props.onDeleteTask}
                                                                                       toggleModal={props.toggleModal}/>)
                     }
-                    {props.taskList.filter(task =>
-                        props.completedTaskList.includes(task.id)).map(task => <Task key={task.id}
+                    {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      text={task.text}
                                                                                      id={task.id}
                                                                                      isChecked={props.completedTaskList.includes(task.id)}

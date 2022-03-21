@@ -28,38 +28,22 @@ const db = getFirestore(firebaseApp);
 const collectionName = "cs124-lab3";
 
 function App() {
-    const [completedTaskList, setCompletedTaskList] = useState([517, 911, 231]);
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [taskToDelete, setTaskToDelete] = useState("");
-    // const [ascDesc, setAscDesc] = useState("asc");
-    // const [order, setOrder] = useState("name");
-    const order = "text";
-    const ascDesc = "asc";
+    const [ascDesc, setAscDesc] = useState("asc");
+    const [order, setOrder] = useState("text");
     const q = query(collection(db, collectionName), orderBy(order, ascDesc));
     const [taskList, loading] = useCollectionData(q);
 
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
-            {[field]: value}, {merge: true});
+            {[field]: value}, {merge: true}).then(doc => console.log(doc[value]));
     }
 
     function handleSetCompletedTask(taskId) {
-        const ifTrue = taskList.filter(task => task.id === taskId)["completed"];
-        console.log(ifTrue);
         setDoc(doc(db, collectionName, taskId),
-            {["completed"]: !(taskList.filter(task => task.id === taskId)["completed"])}, {merge: true});
-        // if (taskList[taskId].completed) {
-        //
-        // } else {
-        //     setDoc(doc(db, collectionName, taskId),
-        //         {["completed"]: true}, {merge: true});
-        // }
-        // if (completedTaskList.includes(taskId)) {
-        //     setCompletedTaskList(completedTaskList.filter(id => id !== taskId));
-        // } else {
-        //     setCompletedTaskList([...completedTaskList, taskId]);
-        // }
+            {["completed"]: !(taskList.find(task => task.id === taskId)["completed"])}, {merge: true});
     }
 
     function handleEditTaskToggle(taskId) {
@@ -74,14 +58,12 @@ function App() {
         if (deleteAll) {
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
-            // Find person using their id
             deleteDoc(doc(db, collectionName, taskId))
         }
     }
 
     function handleAddTask(taskText) {
         const id = generateUniqueID();
-        console.log(taskList);
         setDoc(doc(db, collectionName, id),
             {
                 id: id,
@@ -90,11 +72,6 @@ function App() {
                 created: serverTimestamp(),
                 priority: 1
             });
-        // setTaskList([{
-        //     id: generateUniqueID(),
-        //     text: taskText
-        //     },
-        //     ...taskList])
     }
 
     function toggleModal(taskId) {
@@ -116,7 +93,7 @@ function App() {
                         Are you sure you want to delete this task?
                     </div>
                 </Alert>}
-                <Tasks taskList={taskList} completedTaskList={completedTaskList} editingTaskId={editingTaskId}
+                <Tasks taskList={taskList} editingTaskId={editingTaskId}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
                        onToggleEditTaskId={handleEditTaskToggle}
