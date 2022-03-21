@@ -13,7 +13,7 @@ function Tasks(props) {
             </TabList>
 
             <TabPanel>
-                <TaskList key="Incomplete" taskList={props.taskList.filter(task => !props.completedTaskList.includes(task.id))}
+                <TaskList key="Incomplete" taskList={props.taskList.filter(task => !task.completed)}
                           editingTaskId={props.editingTaskId}
                           completedTaskList={props.completedTaskList}
                           onEditTask={props.onEditTask}
@@ -35,7 +35,7 @@ function Tasks(props) {
                           showDeleteButton={true}></TaskList>
             </TabPanel>
             <TabPanel>
-                <TaskList key="Complete" taskList={props.taskList.filter(task => props.completedTaskList.includes(task.id))}
+                <TaskList key="Complete" taskList={props.taskList.filter(task => task.completed)}
                           editingTaskId={props.editingTaskId}
                           completedTaskList={props.completedTaskList}
                           onEditTask={props.onEditTask}

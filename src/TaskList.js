@@ -12,7 +12,7 @@ function TaskList(props) {
                         !props.completedTaskList.includes(task.id)).map(task => <Task key={task.id}
                                                                                       text={task.text}
                                                                                       id={task.id}
-                                                                                      isChecked={props.completedTaskList.includes(task.id)}
+                                                                                      isChecked={task.completed}
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       onEditTask={props.onEditTask}
                                                                                       onCompletedTask={props.onCompletedTask}

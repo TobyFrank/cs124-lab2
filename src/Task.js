@@ -11,7 +11,7 @@ function Task(props) {
                        onChange={
                            (e) => props.onEditTask(props.id, "name", e.target.value)
                        }
-                       value={props.text}></input> :
+                       value={props.text["name"]}></input> :
                 <span className="taskName">{props.text}</span>
             }
             <img className="editIcon" src={editIcon} alt="edit" onClick={(e ) => props.onToggleEditTaskId(props.id)}></img>

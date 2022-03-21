@@ -27,29 +27,6 @@ const db = getFirestore(firebaseApp);
 
 const collectionName = "cs124-lab3";
 
-// const initialData = [
-//     {
-//         id: 517,
-//         text: "Eat Lunch"
-//     },
-//     {
-//         id: 787,
-//         text: "Buy new John Grisham book"
-//     },
-//     {
-//         id: 911,
-//         text: "Buy new John Grisham book"
-//     },
-//     {
-//         id: 231,
-//         text: "Buy new John Grisham book"
-//     },
-//     {
-//         id: 589,
-//         text: "Buy new John Grisham book"
-//     }
-// ];
-
 function App() {
     const [completedTaskList, setCompletedTaskList] = useState([517, 911, 231]);
     const [editingTaskId, setEditingTaskId] = useState("");
@@ -57,7 +34,7 @@ function App() {
     const [taskToDelete, setTaskToDelete] = useState("");
     // const [ascDesc, setAscDesc] = useState("asc");
     // const [order, setOrder] = useState("name");
-    const order = "name";
+    const order = "text";
     const ascDesc = "asc";
     const q = query(collection(db, collectionName), orderBy(order, ascDesc));
     const [taskList, loading] = useCollectionData(q);
@@ -65,16 +42,24 @@ function App() {
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
             {[field]: value}, {merge: true});
-        // setTaskList(taskList.map(
-        //     task => task.id === taskId ? {...task, "text": newText} : task))
     }
 
     function handleSetCompletedTask(taskId) {
-        if (completedTaskList.includes(taskId)) {
-            setCompletedTaskList(completedTaskList.filter(id => id !== taskId));
-        } else {
-            setCompletedTaskList([...completedTaskList, taskId]);
-        }
+        const ifTrue = taskList.filter(task => task.id === taskId)["completed"];
+        console.log(ifTrue);
+        setDoc(doc(db, collectionName, taskId),
+            {["completed"]: !(taskList.filter(task => task.id === taskId)["completed"])}, {merge: true});
+        // if (taskList[taskId].completed) {
+        //
+        // } else {
+        //     setDoc(doc(db, collectionName, taskId),
+        //         {["completed"]: true}, {merge: true});
+        // }
+        // if (completedTaskList.includes(taskId)) {
+        //     setCompletedTaskList(completedTaskList.filter(id => id !== taskId));
+        // } else {
+        //     setCompletedTaskList([...completedTaskList, taskId]);
+        // }
     }
 
     function handleEditTaskToggle(taskId) {
@@ -87,24 +72,20 @@ function App() {
 
     function handleDeleteTask(taskId, deleteAll) {
         if (deleteAll) {
-            taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p))})
-            // setTaskList(taskList.filter(task => !completedTaskList.includes(task.id)));
-            // setCompletedTaskList([]);
+            taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
             // Find person using their id
-            const p = "";
-            deleteDoc(doc(db, collectionName, p))
-            // setCompletedTaskList(completedTaskList.filter(task => task.id !== taskId));
-            // setTaskList(taskList.filter(task => task.id !== taskId));
+            deleteDoc(doc(db, collectionName, taskId))
         }
     }
 
     function handleAddTask(taskText) {
         const id = generateUniqueID();
+        console.log(taskList);
         setDoc(doc(db, collectionName, id),
             {
                 id: id,
-                name: taskText,
+                text: taskText,
                 completed: false,
                 created: serverTimestamp(),
                 priority: 1
