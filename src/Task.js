@@ -1,9 +1,9 @@
 import "./Task.css";
 import editIcon from "./edit.png";
 import deleteIcon from "./delete.png";
-// import lowPriorityIcon "./lowPriority.png";
-// import medPriorityIcon "./medPriority.png";
-// import highPriorityIcon "./highPriority.png";
+import lowPriorityIcon from "./lowPriority.png";
+import medPriorityIcon from "./medPriority.png";
+import highPriorityIcon from "./highPriority.png";
 
 import {useState} from "react";
 
@@ -24,10 +24,13 @@ function Task(props) {
                            (e) => setEditingTaskText(e.target.value)
                        }
                        onKeyDown={(e) => (e.code === "Enter") && props.onEditTask(taskData.id, "text", editingTaskText)}
+                       onBlur={(e) => props.onEditTask(taskData.id, "text", editingTaskText)}
                        value={editingTaskText}></input> :
                 <span className="taskText">{editingTaskText}</span>
             }
-            <img className="priorityIcon" src={priorityDict[taskData.priority]} alt={priorityDict[taskData.priority]} onClick={(e ) => console.log("priority change")}></img>
+            <div className="priorityIcon">
+                <img src={priorityDict[taskData.priority]} alt={"priority"} onClick={(e ) => console.log("priority change")}></img>
+            </div>
             <img className="editIcon" src={editIcon} alt="edit" onClick={(e ) => props.onEditTask(taskData.id, "text", editingTaskText)}></img>
             <img className="deleteIcon" src={deleteIcon} alt="delete" onClick={(e) => props.toggleModal(taskData.id)}></img>
         </div>

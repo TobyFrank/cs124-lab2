@@ -11,6 +11,7 @@ function TaskList(props) {
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       taskData={task}
                                                                                       isChecked={task.completed}
+                                                                                      showPriorityDropdownList={props.showPriorityDropdownList}
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       editingTaskText={props.editingTaskText}
                                                                                       onEditTask={props.onEditTask}
@@ -21,6 +22,7 @@ function TaskList(props) {
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      taskData={task}
                                                                                      isChecked={task.completed}
+                                                                                     showPriorityDropdownList={props.showPriorityDropdownList}
                                                                                      editingTaskId={props.editingTaskId}
                                                                                      editingTaskText={props.editingTaskText}
                                                                                      onEditTask={props.onEditTask}

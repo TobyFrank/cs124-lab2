@@ -30,10 +30,12 @@ const collectionName = "cs124-lab3";
 function App() {
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
+    const [showPriorityDropdown, setShowPriorityDropdown] = useState([]);
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [taskToDelete, setTaskToDelete] = useState("");
     const [ascDesc, setAscDesc] = useState("asc");
-    const [order, setOrder] = useState("text");
-    const q = query(collection(db, collectionName), orderBy(order, ascDesc));
+    const [sortOrder, setSortOrder] = useState("text");
+    const q = query(collection(db, collectionName), orderBy(sortOrder, ascDesc));
     const [taskList, loading] = useCollectionData(q);
 
     // function debounce(func, timeout = 300){
@@ -84,6 +86,14 @@ function App() {
             });
     }
 
+    function handleChangeSortOrder(sortValue) {
+        setSortOrder(sortValue);
+    }
+
+    function toggleDropdown() {
+        setShowSortDropdown(!showSortDropdown);
+    }
+
     function toggleModal(taskId) {
         setTaskToDelete(taskId);
         setShowAlert(!showAlert);
@@ -95,7 +105,11 @@ function App() {
     return (
         <div className={"app"}>
             <div className={"header"}>
-                <Header></Header>
+                <Header sortOrder={sortOrder}
+                        onSortOrder={handleChangeSortOrder}
+                        showDropdown={showSortDropdown}
+                        onShowDropdown={toggleDropdown}>
+                </Header>
             </div>
             <div className={"tasks"}>
                 {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDelete={taskToDelete}>
@@ -105,6 +119,7 @@ function App() {
                 </Alert>}
                 <Tasks taskList={taskList}
                        editingTaskId={editingTaskId}
+                       showPriorityDropdownList={showPriorityDropdown}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
                        onDeleteTask={handleDeleteTask}
