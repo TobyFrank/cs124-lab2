@@ -30,7 +30,7 @@ const collectionName = "cs124-lab3";
 function App() {
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const [showPriorityDropdown, setShowPriorityDropdown] = useState([]);
+    const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
     const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [taskToDelete, setTaskToDelete] = useState("");
     const [ascDesc, setAscDesc] = useState("asc");
@@ -49,8 +49,10 @@ function App() {
     function handleEditTask(taskId, field, value) {
         setDoc(doc(db, collectionName, taskId),
             {[field]: value},
-            {merge: true}).then(() => console.log("edit"));
-        handleEditTaskToggle(taskId);
+            {merge: true});
+        if (field === "text") {
+            handleEditTaskToggle(taskId);
+        }
     }
 
     function handleSetCompletedTask(taskId) {
@@ -86,11 +88,20 @@ function App() {
             });
     }
 
+    function handleSetPriorityDropdown(taskId) {
+        if (showPriorityDropdown === taskId) {
+            setShowPriorityDropdown("");
+        } else {
+            setShowPriorityDropdown(taskId);
+        }
+
+    }
+
     function handleChangeSortOrder(sortValue) {
         setSortOrder(sortValue);
     }
 
-    function toggleDropdown() {
+    function toggleSortDropdown() {
         setShowSortDropdown(!showSortDropdown);
     }
 
@@ -107,8 +118,8 @@ function App() {
             <div className={"header"}>
                 <Header sortOrder={sortOrder}
                         onSortOrder={handleChangeSortOrder}
-                        showDropdown={showSortDropdown}
-                        onShowDropdown={toggleDropdown}>
+                        showSortDropdown={showSortDropdown}
+                        onShowSortDropdown={toggleSortDropdown}>
                 </Header>
             </div>
             <div className={"tasks"}>
@@ -120,6 +131,7 @@ function App() {
                 <Tasks taskList={taskList}
                        editingTaskId={editingTaskId}
                        showPriorityDropdownList={showPriorityDropdown}
+                       onPriorityDropdownToggle={handleSetPriorityDropdown}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
                        onDeleteTask={handleDeleteTask}

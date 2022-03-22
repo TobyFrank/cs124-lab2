@@ -12,6 +12,7 @@ function TaskList(props) {
                                                                                       taskData={task}
                                                                                       isChecked={task.completed}
                                                                                       showPriorityDropdownList={props.showPriorityDropdownList}
+                                                                                      onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       editingTaskText={props.editingTaskText}
                                                                                       onEditTask={props.onEditTask}
@@ -23,6 +24,7 @@ function TaskList(props) {
                                                                                      taskData={task}
                                                                                      isChecked={task.completed}
                                                                                      showPriorityDropdownList={props.showPriorityDropdownList}
+                                                                                     onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                      editingTaskId={props.editingTaskId}
                                                                                      editingTaskText={props.editingTaskText}
                                                                                      onEditTask={props.onEditTask}

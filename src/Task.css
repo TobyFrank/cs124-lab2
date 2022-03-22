@@ -56,7 +56,11 @@
     height: 20px;
 }
 
-.priorityIcon img {
+.priorityIcon {
+    height: 20px;
+}
+
+.priorityDropdown img {
     height: 20px;
 }
 

@@ -28,11 +28,24 @@ function Task(props) {
                        value={editingTaskText}></input> :
                 <span className="taskText">{editingTaskText}</span>
             }
-            <div className="priorityIcon">
-                <img src={priorityDict[taskData.priority]} alt={"priority"} onClick={(e ) => console.log("priority change")}></img>
+            <img className="priorityIcon"
+                 src={priorityDict[taskData.priority]}
+                 alt={"priority"}
+                 onClick={(e ) => props.onPriorityDropdownToggle(taskData.id)}></img>
+            <img className="editIcon"
+                 src={editIcon}
+                 alt="edit"
+                 onClick={(e ) => props.onEditTask(taskData.id, "text", editingTaskText)}></img>
+            <img className="deleteIcon"
+                 src={deleteIcon}
+                 alt="delete"
+                 onClick={(e) => props.toggleModal(taskData.id)}></img>
+            {props.showPriorityDropdownList.includes(taskData.id) && <div className="priorityDropdown">
+                <img src={priorityDict[1]} alt={"lowPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 1)}></img>
+                <img src={priorityDict[2]} alt={"medPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 2)}></img>
+                <img src={priorityDict[3]} alt={"highPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 3)}></img>
             </div>
-            <img className="editIcon" src={editIcon} alt="edit" onClick={(e ) => props.onEditTask(taskData.id, "text", editingTaskText)}></img>
-            <img className="deleteIcon" src={deleteIcon} alt="delete" onClick={(e) => props.toggleModal(taskData.id)}></img>
+            }
         </div>
     )
 }

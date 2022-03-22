@@ -15,6 +15,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Incomplete" taskList={props.taskList.filter(task => !task.completed)}
                           showPriorityDropdownList={props.showPriorityDropdownList}
+                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
@@ -26,6 +27,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="All" taskList={props.taskList}
                           showPriorityDropdownList={props.showPriorityDropdownList}
+                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
@@ -37,6 +39,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Complete" taskList={props.taskList.filter(task => task.completed)}
                           showPriorityDropdownList={props.showPriorityDropdownList}
+                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
