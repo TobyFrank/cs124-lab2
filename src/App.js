@@ -31,9 +31,8 @@ function App() {
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
-    const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [tabIndex, setTabIndex] = useState(1);
-    const [taskToDelete, setTaskToDelete] = useState("");
+    const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
     const [ascDesc, setAscDesc] = useState("asc");
     const [sortParam, setSortParam] = useState("text");
     const q = query(collection(db, collectionName), orderBy(sortParam, ascDesc));
@@ -102,12 +101,8 @@ function App() {
         setSortParam(sortValue);
     }
 
-    function toggleSortDropdown() {
-        setShowSortDropdown(!showSortDropdown);
-    }
-
-    function toggleModal(taskId) {
-        setTaskToDelete(taskId);
+    function toggleModal(taskId, deleteAll) {
+        setTaskToDeleteParams([taskId, deleteAll]);
         setShowAlert(!showAlert);
     }
 
@@ -115,18 +110,20 @@ function App() {
         return <div className={"loading"}>Loading Task List...</div>
     }
     return (
-        <div className={"app"}>
+        <div className={"app"} onClick={(e) => {
+            handleSetPriorityDropdown("");
+        }}>
             <div className={"header"}>
                 <Header sortParam={sortParam}
-                        onSortParamChange={handleChangeSortParam}
-                        showSortDropdown={showSortDropdown}
-                        onShowSortDropdown={toggleSortDropdown}>
+                        onSortParamChange={handleChangeSortParam}>
                 </Header>
             </div>
             <div className={"tasks"}>
-                {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDelete={taskToDelete}>
+                {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDeleteParams={taskToDeleteParams}>
                     <div>
-                        Are you sure you want to delete this task?
+                        {taskToDeleteParams[1] ?
+                            "Are you sure you want to delete all completed tasks?" :
+                            "Are you sure you want to delete this task?"}
                     </div>
                 </Alert>}
                 <Tasks taskList={taskList}

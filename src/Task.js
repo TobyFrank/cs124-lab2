@@ -28,10 +28,15 @@ function Task(props) {
                        value={editingTaskText}></input> :
                 <span className="taskText">{editingTaskText}</span>
             }
-            <img className="priorityIcon"
+            <input type="image"
+                   className="priorityIcon"
                  src={priorityDict[taskData.priority]}
                  alt={"priority"}
-                 onClick={(e ) => props.onPriorityDropdownToggle(taskData.id)}></img>
+                 onClick={(e ) => {
+                     props.onPriorityDropdownToggle(taskData.id);
+                     e.stopPropagation();
+                     e.preventDefault();
+                 }}></input>
             <img className="editIcon"
                  src={editIcon}
                  alt="edit"
@@ -39,11 +44,35 @@ function Task(props) {
             <img className="deleteIcon"
                  src={deleteIcon}
                  alt="delete"
-                 onClick={(e) => props.toggleModal(taskData.id)}></img>
+                 onClick={(e) => props.toggleModal(taskData.id, false)}></img>
             {props.showPriorityDropdownList.includes(taskData.id) && <div className="priorityDropdown">
-                <img src={priorityDict[1]} alt={"lowPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 1)}></img>
-                <img src={priorityDict[2]} alt={"medPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 2)}></img>
-                <img src={priorityDict[3]} alt={"highPriority"} onClick={(e ) => props.onEditTask(taskData.id, "priority", 3)}></img>
+                <img src={priorityDict[1]}
+                     className={taskData.priority === 1 ? "selectedPriority" : "lowPriority"}
+                     alt={"lowPriority"}
+                     onClick={(e ) => {
+                         props.onEditTask(taskData.id, "priority", 1);
+                         props.onPriorityDropdownToggle(taskData.id);
+                         e.stopPropagation();
+                         e.preventDefault();
+                }}></img>
+                <img src={priorityDict[2]}
+                     className={taskData.priority === 2 ? "selectedPriority" : "medPriority"}
+                     alt={"medPriority"}
+                     onClick={(e ) => {
+                         props.onEditTask(taskData.id, "priority", 2);
+                         props.onPriorityDropdownToggle(taskData.id);
+                         e.stopPropagation();
+                         e.preventDefault();
+                }}></img>
+                <img src={priorityDict[3]}
+                     className={taskData.priority === 3 ? "selectedPriority" : "highPriority"}
+                     alt={"highPriority"}
+                     onClick={(e ) => {
+                         props.onEditTask(taskData.id, "priority", 3);
+                         props.onPriorityDropdownToggle(taskData.id);
+                         e.stopPropagation();
+                         e.preventDefault();
+                }}></img>
             </div>
             }
         </div>

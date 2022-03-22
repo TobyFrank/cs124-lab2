@@ -10,7 +10,10 @@
     border-width: 1px;
     border-radius: 5px;
     word-wrap:anywhere;
+}
 
+.listItem > * {
+    margin: 0vh 1vw;
 }
 
 .task {
@@ -62,5 +65,24 @@
 
 .priorityDropdown img {
     height: 20px;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
 }
+
+.priorityDropdown {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    background-color: white;
+    min-width: 50px;
+    right: 70px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.selectedPriority {
+    background-color: #e8e8e8;
+}
+
+.priorityDropdown img:hover {background-color: #f1f1f1}
 

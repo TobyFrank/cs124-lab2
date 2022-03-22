@@ -2,6 +2,10 @@
     flex-grow: 1;
 }
 
+TabList {
+    z-index: 1;
+}
+
 .react-tabs {
     height: 100%;
     background-color: #C1F4C5;
