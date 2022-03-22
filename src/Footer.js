@@ -9,7 +9,12 @@ function Footer(props) {
             <input className={"addTask"}
                    onClick={(e) => setTaskToAdd("")}
                    onChange={(e) => setTaskToAdd(e.target.value)}
-                   onKeyDown={(e) => (e.code === "Enter") && (props.onAddTask(taskToAdd))}
+                   onKeyDown={(e) => {
+                       if (e.code === "Enter") {
+                           props.onAddTask(taskToAdd);
+                           setTaskToAdd("");
+                       }
+                   }}
                    onBlur={(e) => setTaskToAdd("New Task")}
                    value={taskToAdd}></input>
             <button className={"addTaskButton"} type={"button"} onClick={(e) => {

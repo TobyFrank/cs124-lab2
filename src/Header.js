@@ -2,7 +2,7 @@ import "./Header.css";
 import {useState} from "react";
 
 function Header(props) {
-    const listOfSortItems = ["text", "priority", "created"]
+    // const listOfSortItems = ["text", "priority", "created"]
     // const nextSortIndex = (listOfSortItems.indexOf(props.sortOrder) + 1)%listOfSortItems.length;
     return (
         <>
@@ -12,9 +12,9 @@ function Header(props) {
                         onClick={(e) => props.onShowSortDropdown()}>
                     Dropdown</button>
                 {props.showSortDropdown && <div className="sortDropdown">
-                    <a onClick={(e) => props.onSortOrder("text")}>Alphabetical</a>
-                    <a onClick={(e) => props.onSortOrder("priority")}>Priority</a>
-                    <a onClick={(e) => props.onSortOrder("created")}>Creation Date</a>
+                    <a onClick={(e) => props.onSortParamChange("text")}>Alphabetical</a>
+                    <a onClick={(e) => props.onSortParamChange("priority")}>Priority</a>
+                    <a onClick={(e) => props.onSortParamChange("created")}>Creation Date</a>
                 </div>}
             </div>
         </>

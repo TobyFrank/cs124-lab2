@@ -5,7 +5,7 @@ import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 
 function Tasks(props) {
     return (
-        <Tabs>
+        <Tabs defaultIndex={1} selectedIndex={props.tabIndex} onSelect={index => props.setTabIndex(index)}>
             <TabList>
                 <Tab>Incomplete</Tab>
                 <Tab>All</Tab>

@@ -32,10 +32,11 @@ function App() {
     const [showAlert, setShowAlert] = useState(false);
     const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
     const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const [tabIndex, setTabIndex] = useState(1);
     const [taskToDelete, setTaskToDelete] = useState("");
     const [ascDesc, setAscDesc] = useState("asc");
-    const [sortOrder, setSortOrder] = useState("text");
-    const q = query(collection(db, collectionName), orderBy(sortOrder, ascDesc));
+    const [sortParam, setSortParam] = useState("text");
+    const q = query(collection(db, collectionName), orderBy(sortParam, ascDesc));
     const [taskList, loading] = useCollectionData(q);
 
     // function debounce(func, timeout = 300){
@@ -97,8 +98,8 @@ function App() {
 
     }
 
-    function handleChangeSortOrder(sortValue) {
-        setSortOrder(sortValue);
+    function handleChangeSortParam(sortValue) {
+        setSortParam(sortValue);
     }
 
     function toggleSortDropdown() {
@@ -116,8 +117,8 @@ function App() {
     return (
         <div className={"app"}>
             <div className={"header"}>
-                <Header sortOrder={sortOrder}
-                        onSortOrder={handleChangeSortOrder}
+                <Header sortParam={sortParam}
+                        onSortParamChange={handleChangeSortParam}
                         showSortDropdown={showSortDropdown}
                         onShowSortDropdown={toggleSortDropdown}>
                 </Header>
@@ -132,15 +133,19 @@ function App() {
                        editingTaskId={editingTaskId}
                        showPriorityDropdownList={showPriorityDropdown}
                        onPriorityDropdownToggle={handleSetPriorityDropdown}
+                       tabIndex={tabIndex}
+                       setTabIndex={setTabIndex}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
                        onDeleteTask={handleDeleteTask}
                        toggleModal={toggleModal}
                        showAlert={showAlert}></Tasks>
             </div>
-            <div className="footer">
-                <Footer onAddTask={handleAddTask}></Footer>
-            </div>
+            {tabIndex !== 2 &&
+                <div className="footer">
+                    <Footer onAddTask={handleAddTask}></Footer>
+                </div>
+            }
         </div>
     )
 
