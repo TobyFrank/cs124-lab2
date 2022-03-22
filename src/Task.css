@@ -28,6 +28,7 @@
     /*border-color: black;*/
     font-size: 12pt;
     /*border-bottom: #65C18C;*/
+    flex-grow: 10;
 }
 
 .task.editing {
@@ -38,10 +39,6 @@
     border-style: solid;
     border-color: black;
     font-size: 12pt;
-    flex-grow: 10;
-}
-
-.taskText {
     flex-grow: 10;
 }
 

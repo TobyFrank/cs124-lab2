@@ -6,7 +6,7 @@ function TaskList(props) {
     return (
         <div className={"taskList"}>
             {props.taskList.length === 0 ?
-                <div>You have no free will.</div> :
+                <div>{props.emptyMessage}</div> :
                 <div>
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       taskData={task}

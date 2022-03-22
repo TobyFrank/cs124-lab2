@@ -19,14 +19,15 @@ function Task(props) {
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
             <input type="checkbox" checked={props.isChecked} onChange={(e) => props.onCompletedTask(taskData.id)}></input>
             {props.editingTaskId === taskData.id ?
-                <input className={taskData.id === props.editingTaskId ? "task editing" : "task"}
+                <input id={taskData.id}
+                       className={"task editing"}
                        onChange={
                            (e) => setEditingTaskText(e.target.value)
                        }
                        onKeyDown={(e) => (e.code === "Enter") && props.onEditTask(taskData.id, "text", editingTaskText)}
                        onBlur={(e) => props.onEditTask(taskData.id, "text", editingTaskText)}
                        value={editingTaskText}></input> :
-                <span className="taskText">{editingTaskText}</span>
+                <span id={taskData.id} className="task">{editingTaskText}</span>
             }
             <input type="image"
                    className="priorityIcon"
@@ -40,7 +41,10 @@ function Task(props) {
             <img className="editIcon"
                  src={editIcon}
                  alt="edit"
-                 onClick={(e ) => props.onEditTask(taskData.id, "text", editingTaskText)}></img>
+                 onClick={(e ) => {
+                     props.onEditTask(taskData.id, "text", editingTaskText);
+                     setTimeout(() => document.getElementById(taskData.id).focus(), 10);
+                 }}></img>
             <img className="deleteIcon"
                  src={deleteIcon}
                  alt="delete"
