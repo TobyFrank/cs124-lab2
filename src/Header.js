@@ -3,10 +3,9 @@ import {useState} from "react";
 import filterIcon from "./filter.png";
 
 function Header(props) {
-    const [titleName, setTitleName] = useState("To-Do List:")
     return (
         <div className={"headerFlexbox"}>
-            <p className={"headerText"}>{titleName}</p>
+            <p className={"headerText"}>To-Do List:</p>
             <div className="dropdown">
                 <button className="dropdownButton"
                         onClick={(e) => {
@@ -14,7 +13,7 @@ function Header(props) {
                             e.stopPropagation();
                             e.preventDefault();
                         }}>
-                    <img className={"filterIcon"} src={filterIcon}></img>
+                    <img className={"filterIcon"} src={filterIcon} alt={"filterIcon"}></img>
                     </button>
                 {props.showSortDropdown && <div className={"paramDropdown"}>
                     <span className={"sortDirection"}
