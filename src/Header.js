@@ -3,11 +3,10 @@ import {useState} from "react";
 import filterIcon from "./filter.png";
 
 function Header(props) {
-    // const listOfSortItems = ["text", "priority", "created"]
-    // const nextSortIndex = (listOfSortItems.indexOf(props.sortOrder) + 1)%listOfSortItems.length;
+    const [titleName, setTitleName] = useState("To-Do List:")
     return (
         <div className={"headerFlexbox"}>
-            <p className={"headerText"}>To Do List:</p>
+            <p className={"headerText"}>{titleName}</p>
             <div className="dropdown">
                 <button className="dropdownButton"
                         onClick={(e) => {
@@ -18,34 +17,30 @@ function Header(props) {
                     <img className={"filterIcon"} src={filterIcon}></img>
                     </button>
                 {props.showSortDropdown && <div className={"paramDropdown"}>
-                    <a href="#"
-                       className={props.sortParam === "text" ? "currentParam" : "param"}
+                    <a className={props.sortParam === "text" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("text");
                            e.stopPropagation();
                            e.preventDefault();
                        }}>Alphabetical</a>
-                    <a href="#"
-                       className={props.sortParam === "priority" ? "currentParam" : "param"}
+                    <a className={props.sortParam === "priority" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("priority");
                            e.stopPropagation();
                            e.preventDefault();
                        }}>Priority</a>
-                    <a href="#"
-                       className={props.sortParam === "created" ? "currentParam" : "param"}
+                    <a className={props.sortParam === "created" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("created");
                            e.stopPropagation();
                            e.preventDefault();
                        }}>Newest</a>
-                    <a href="#"
-                       className={"sortDirection"}
+                    <a className={"sortDirection"}
                        onClick={(e) => {
                            props.onSortDirectionToggle();
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>{props.sortDirection === "asc" ? "^" : "v"}</a>
+                       }}>{props.sortDirection === "asc" ? "^ Sort Asc" : "v Sort Desc"}</a>
                 </div>}
             </div>
         </div>

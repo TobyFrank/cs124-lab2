@@ -9,7 +9,7 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    word-wrap:anywhere;
+    word-wrap: anywhere;
 }
 
 .listItem > * {
@@ -63,7 +63,6 @@
 .priorityDropdown img {
     height: 20px;
     padding: 6px 8px;
-    text-decoration: none;
     display: block;
 }
 

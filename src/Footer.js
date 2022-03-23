@@ -16,25 +16,26 @@ function Footer(props) {
     return (
         <div className="addTaskSection">
             <input className={"addTask"}
-                   onClick={(e) => setTaskToAdd("")}
-                   onChange={(e) => setTaskToAdd(e.target.value)}
+                   onClick={(e) =>
+                       taskToAdd[0] === "New Task" && setTaskToAdd(["", taskToAdd[1]])}
+                   onChange={(e) => setTaskToAdd([e.target.value, taskToAdd[1]])}
                    onKeyDown={(e) => {
                        if (e.code === "Enter") {
                            props.onAddTask(taskToAdd);
-                           setTaskToAdd("");
+                           setTaskToAdd(["", taskToAdd[1]]);
                        }
                    }}
-                   onBlur={(e) => setTaskToAdd("New Task")}
+                   // onBlur={(e) => setTaskToAdd(["New Task", taskToAdd[1]])}
                    value={taskToAdd[0]}></input>
-            <input type="image"
-                   className="priorityIcon"
+            <img type="image"
+                   className="addPriorityIcon"
                    src={priorityDict[taskToAdd[1]]}
                    alt={"priority"}
                    onClick={(e ) => {
                        props.onPriorityDropdownToggle("addingTask");
                        e.stopPropagation();
                        e.preventDefault();
-                   }}></input>
+                   }}></img>
             {props.showPriorityDropdown === "addingTask" && <div className="priorityDropdown">
                 <img src={priorityDict[1]}
                      className={taskToAdd[1] === 1 ? "selectedPriority" : "lowPriority"}
@@ -67,7 +68,7 @@ function Footer(props) {
             <button className={"addTaskButton"} type={"button"} onClick={(e) => {
                 props.onAddTask(taskToAdd);
                 setTaskToAdd(["New Task", 1]);
-            }}>Add Task</button>
+            }}>Add</button>
         </div>
     )
 }
