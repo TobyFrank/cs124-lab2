@@ -15,7 +15,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Incomplete" taskList={props.taskList.filter(task => !task.completed)}
                           emptyMessage={"Looks like you have no tasks to complete."}
-                          showPriorityDropdownList={props.showPriorityDropdownList}
+                          showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
@@ -28,7 +28,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="All" taskList={props.taskList}
                           emptyMessage={"Looks like you have no tasks yet! Try adding some below."}
-                          showPriorityDropdownList={props.showPriorityDropdownList}
+                          showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
@@ -41,7 +41,7 @@ function Tasks(props) {
             <TabPanel>
                 <TaskList key="Complete" taskList={props.taskList.filter(task => task.completed)}
                           emptyMessage={"Looks like you have no completed tasks."}
-                          showPriorityDropdownList={props.showPriorityDropdownList}
+                          showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}

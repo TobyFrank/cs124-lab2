@@ -11,7 +11,7 @@ function TaskList(props) {
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       taskData={task}
                                                                                       isChecked={task.completed}
-                                                                                      showPriorityDropdownList={props.showPriorityDropdownList}
+                                                                                      showPriorityDropdown={props.showPriorityDropdown}
                                                                                       onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       editingTaskText={props.editingTaskText}
@@ -23,7 +23,7 @@ function TaskList(props) {
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      taskData={task}
                                                                                      isChecked={task.completed}
-                                                                                     showPriorityDropdownList={props.showPriorityDropdownList}
+                                                                                     showPriorityDropdown={props.showPriorityDropdown}
                                                                                      onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                      editingTaskId={props.editingTaskId}
                                                                                      editingTaskText={props.editingTaskText}

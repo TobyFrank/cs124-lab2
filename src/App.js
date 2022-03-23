@@ -10,7 +10,7 @@ import Alert from "./Alert.js";
 import Tasks from "./Tasks.js";
 
 import { initializeApp } from "firebase/app";
-import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const firebaseConfig = {
@@ -31,6 +31,7 @@ function App() {
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [tabIndex, setTabIndex] = useState(1);
     const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
     const [ascDesc, setAscDesc] = useState("asc");
@@ -76,7 +77,8 @@ function App() {
         }
     }
 
-    function handleAddTask(taskText) {
+    function handleAddTask(taskInfo) {
+        const [taskText, taskPriority] = taskInfo;
         const id = generateUniqueID();
         setDoc(doc(db, collectionName, id),
             {
@@ -84,21 +86,24 @@ function App() {
                 text: taskText,
                 completed: false,
                 created: serverTimestamp(),
-                priority: 1
+                priority: taskPriority
             });
     }
 
-    function handleSetPriorityDropdown(taskId) {
+    function handleChangeSortParam(sortValue) {
+        setSortParam(sortValue);
+    }
+
+    function toggleShowPriorityDropdown(taskId) {
         if (showPriorityDropdown === taskId) {
             setShowPriorityDropdown("");
         } else {
             setShowPriorityDropdown(taskId);
         }
-
     }
 
-    function handleChangeSortParam(sortValue) {
-        setSortParam(sortValue);
+    function toggleShowSortDropdown(value) {
+        setShowSortDropdown(value);
     }
 
     function toggleModal(taskId, deleteAll) {
@@ -111,11 +116,14 @@ function App() {
     }
     return (
         <div className={"app"} onClick={(e) => {
-            handleSetPriorityDropdown("");
+            toggleShowPriorityDropdown("");
+            toggleShowSortDropdown(false);
         }}>
             <div className={"header"}>
                 <Header sortParam={sortParam}
-                        onSortParamChange={handleChangeSortParam}>
+                        onSortParamChange={handleChangeSortParam}
+                        showSortDropdown={showSortDropdown}
+                        onSortDropdownToggle={toggleShowSortDropdown}>
                 </Header>
             </div>
             <div className={"tasks"}>
@@ -128,8 +136,8 @@ function App() {
                 </Alert>}
                 <Tasks taskList={taskList}
                        editingTaskId={editingTaskId}
-                       showPriorityDropdownList={showPriorityDropdown}
-                       onPriorityDropdownToggle={handleSetPriorityDropdown}
+                       showPriorityDropdown={showPriorityDropdown}
+                       onPriorityDropdownToggle={toggleShowPriorityDropdown}
                        tabIndex={tabIndex}
                        setTabIndex={setTabIndex}
                        onEditTask={handleEditTask}
@@ -140,7 +148,9 @@ function App() {
             </div>
             {tabIndex !== 2 &&
                 <div className="footer">
-                    <Footer onAddTask={handleAddTask}></Footer>
+                    <Footer onAddTask={handleAddTask}
+                            showPriorityDropdown={showPriorityDropdown}
+                            onPriorityDropdownToggle={toggleShowPriorityDropdown}></Footer>
                 </div>
             }
         </div>

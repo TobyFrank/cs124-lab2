@@ -46,4 +46,6 @@
     display: block;
 }
 
+.dropdown-content .currentParam {background-color: #e8e8e8}
+
 .dropdown-content a:hover {background-color: #f1f1f1}

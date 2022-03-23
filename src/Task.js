@@ -49,7 +49,7 @@ function Task(props) {
                  src={deleteIcon}
                  alt="delete"
                  onClick={(e) => props.toggleModal(taskData.id, false)}></img>
-            {props.showPriorityDropdownList.includes(taskData.id) && <div className="priorityDropdown">
+            {props.showPriorityDropdown === taskData.id && <div className="priorityDropdown">
                 <img src={priorityDict[1]}
                      className={taskData.priority === 1 ? "selectedPriority" : "lowPriority"}
                      alt={"lowPriority"}
