@@ -1,5 +1,4 @@
 import "./Header.css";
-import {useState} from "react";
 import filterIcon from "./filter.png";
 
 function Header(props) {

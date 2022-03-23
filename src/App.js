@@ -58,7 +58,7 @@ function App() {
 
     function handleSetCompletedTask(taskId) {
         setDoc(doc(db, collectionName, taskId),
-            {["completed"]: !(taskList.find(task => task.id === taskId)["completed"])}, {merge: true});
+            {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
     }
 
     function handleAddTask(taskInfo) {
