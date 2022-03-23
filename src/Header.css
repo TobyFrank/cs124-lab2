@@ -41,7 +41,7 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.paramDropdown a {
+.paramDropdown span {
     color: black;
     padding: 12px 16px;
     display: block;
@@ -49,4 +49,4 @@
 
 .paramDropdown .currentParam {background-color: #e8e8e8}
 
-.paramDropdown a:hover {background-color: #f1f1f1}
+.paramDropdown span:hover {background-color: #f1f1f1}
