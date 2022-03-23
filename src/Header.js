@@ -17,6 +17,12 @@ function Header(props) {
                     <img className={"filterIcon"} src={filterIcon}></img>
                     </button>
                 {props.showSortDropdown && <div className={"paramDropdown"}>
+                    <a className={"sortDirection"}
+                       onClick={(e) => {
+                           props.onSortDirectionToggle();
+                           e.stopPropagation();
+                           e.preventDefault();
+                       }}>{props.sortDirection === "asc" ? "^ Sort Asc ^" : "v Sort Desc v"}</a>
                     <a className={props.sortParam === "text" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("text");
@@ -35,12 +41,6 @@ function Header(props) {
                            e.stopPropagation();
                            e.preventDefault();
                        }}>Newest</a>
-                    <a className={"sortDirection"}
-                       onClick={(e) => {
-                           props.onSortDirectionToggle();
-                           e.stopPropagation();
-                           e.preventDefault();
-                       }}>{props.sortDirection === "asc" ? "^ Sort Asc" : "v Sort Desc"}</a>
                 </div>}
             </div>
         </div>

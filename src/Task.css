@@ -76,6 +76,16 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+/*.introMessage {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
+
+.helpIcon {
+    margin-top: 25px;
+    height: 20px;
+}
+
 .selectedPriority {
     background-color: #e8e8e8;
 }

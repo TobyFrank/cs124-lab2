@@ -67,7 +67,7 @@ function Footer(props) {
             </div>}
             <button className={"addTaskButton"} type={"button"} onClick={(e) => {
                 props.onAddTask(taskToAdd);
-                setTaskToAdd(["New Task", 1]);
+                setTaskToAdd(["New Task", taskToAdd[1]]);
             }}>Add</button>
         </div>
     )
