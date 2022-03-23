@@ -9,7 +9,7 @@ function Header(props) {
         <div className={"headerFlexbox"}>
             <p className={"headerText"}>To Do List:</p>
             <div className="dropdown">
-                <button className="dropbtn"
+                <button className="dropdownButton"
                         onClick={(e) => {
                             props.onSortDropdownToggle(!props.showSortDropdown);
                             e.stopPropagation();
@@ -17,7 +17,7 @@ function Header(props) {
                         }}>
                     <img className={"filterIcon"} src={filterIcon}></img>
                     </button>
-                {props.showSortDropdown && <div className={"dropdown-content"}>
+                {props.showSortDropdown && <div className={"paramDropdown"}>
                     <a href="#"
                        className={props.sortParam === "text" ? "currentParam" : "param"}
                        onClick={(e) => {
@@ -39,6 +39,13 @@ function Header(props) {
                            e.stopPropagation();
                            e.preventDefault();
                        }}>Newest</a>
+                    <a href="#"
+                       className={"sortDirection"}
+                       onClick={(e) => {
+                           props.onSortDirectionToggle();
+                           e.stopPropagation();
+                           e.preventDefault();
+                       }}>{props.sortDirection === "asc" ? "^" : "v"}</a>
                 </div>}
             </div>
         </div>
