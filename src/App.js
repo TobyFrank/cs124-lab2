@@ -9,50 +9,46 @@ import Footer from "./Footer.js";
 import Alert from "./Alert.js";
 import Tasks from "./Tasks.js";
 
-const initialData = [
-    {
-        id: 517,
-        text: "Eat Lunch"
-    },
-    {
-        id: 787,
-        text: "Buy new John Grisham book"
-    },
-    {
-        id: 911,
-        text: "Buy new John Grisham book"
-    },
-    {
-        id: 231,
-        text: "Buy new John Grisham book"
-    },
-    {
-        id: 589,
-        text: "Buy new John Grisham book"
-    }
-];
+import { initializeApp } from "firebase/app";
+import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDxRZnwVYgJJSZOtNsJcxYGcCx-Ta_DAxk",
+    authDomain: "cs124-lab3-1ad74.firebaseapp.com",
+    projectId: "cs124-lab3-1ad74",
+    storageBucket: "cs124-lab3-1ad74.appspot.com",
+    messagingSenderId: "660026892825",
+    appId: "1:660026892825:web:780ac3094a1656d26a4088"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
+const collectionName = "cs124-lab3";
 
 function App() {
-    const [taskList, setTaskList] = useState(initialData);
-    const [completedTaskList, setCompletedTaskList] = useState([517, 911, 231]);
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const [taskToDelete, setTaskToDelete] = useState("");
+    const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const [tabIndex, setTabIndex] = useState(1);
+    const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [sortParam, setSortParam] = useState("text");
+    const q = query(collection(db, collectionName), orderBy(sortParam, sortDirection));
+    const [taskList, loading] = useCollectionData(q);
 
-    function handleEditTask(taskId, newText) {
-        setTaskList(taskList.map(
-            task => task.id === taskId ? {...task, "text": newText} : task))
-    }
-
-    function handleSetCompletedTask(taskId) {
-        if (completedTaskList.includes(taskId)) {
-            setCompletedTaskList(completedTaskList.filter(id => id !== taskId));
-        } else {
-            setCompletedTaskList([...completedTaskList, taskId]);
+    function handleEditTask(taskId, field, value) {
+        setDoc(doc(db, collectionName, taskId),
+            {[field]: value},
+            {merge: true});
+        if (field === "text") {
+            handleEditingTaskIdChange(taskId);
         }
     }
 
-    function handleEditTaskToggle(taskId) {
+    function handleEditingTaskIdChange(taskId) {
         if (editingTaskId === taskId) {
             setEditingTaskId("");
         } else {
@@ -60,51 +56,105 @@ function App() {
         }
     }
 
-    function handleDeleteTask(taskId, deleteAll) {
-        if (deleteAll) {
-            setTaskList(taskList.filter(task => !completedTaskList.includes(task.id)));
-            setCompletedTaskList([]);
+    function handleSetCompletedTask(taskId) {
+        setDoc(doc(db, collectionName, taskId),
+            {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
+    }
+
+    function handleAddTask(taskInfo) {
+        const [taskText, taskPriority] = taskInfo;
+        const id = generateUniqueID();
+        setDoc(doc(db, collectionName, id),
+            {
+                id: id,
+                text: taskText,
+                completed: false,
+                created: serverTimestamp(),
+                priority: taskPriority
+            });
+    }
+
+    function handleDeleteTask(taskId, ifDeleteAll) {
+        if (ifDeleteAll) {
+            taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
-            setCompletedTaskList(completedTaskList.filter(task => task.id !== taskId));
-            setTaskList(taskList.filter(task => task.id !== taskId));
+            deleteDoc(doc(db, collectionName, taskId))
         }
     }
 
-    function handleAddTask(taskText) {
-        setTaskList([{
-            id: generateUniqueID(),
-            text: taskText
-            },
-            ...taskList])
+    function toggleSortDirection() {
+        if (sortDirection === "asc") {
+            setSortDirection("desc");
+        } else {
+            setSortDirection("asc");
+        }
     }
 
-    function toggleModal(taskId) {
-        setTaskToDelete(taskId);
+    function handleChangeSortParam(sortBy) {
+        setSortParam(sortBy);
+    }
+
+    function toggleShowPriorityDropdown(taskId) {
+        if (showPriorityDropdown === taskId) {
+            setShowPriorityDropdown("");
+        } else {
+            setShowPriorityDropdown(taskId);
+        }
+    }
+
+    function toggleShowSortDropdown(ifShow) {
+        setShowSortDropdown(ifShow);
+    }
+
+    function toggleModal(taskId, ifDeleteAll) {
+        setTaskToDeleteParams([taskId, ifDeleteAll]);
         setShowAlert(!showAlert);
     }
 
+    if (loading) {
+        return <div className={"loading"}>Loading Task List...</div>
+    }
     return (
-        <div className={"app"}>
+        <div className={"app"} onClick={(e) => {
+            toggleShowPriorityDropdown("");
+            toggleShowSortDropdown(false);
+        }}>
             <div className={"header"}>
-                <Header></Header>
+                <Header sortParam={sortParam}
+                        onSortParamChange={handleChangeSortParam}
+                        showSortDropdown={showSortDropdown}
+                        onSortDropdownToggle={toggleShowSortDropdown}
+                        sortDirection={sortDirection}
+                        onSortDirectionToggle={toggleSortDirection}>
+                </Header>
             </div>
+            {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDeleteParams={taskToDeleteParams}>
+                <div>
+                    {taskToDeleteParams[1] ?
+                        "Are you sure you want to delete all completed tasks?" :
+                        "Are you sure you want to delete this task?"}
+                </div>
+            </Alert>}
             <div className={"tasks"}>
-                {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDelete={taskToDelete}>
-                    <div>
-                        Are you sure you want to delete this task?
-                    </div>
-                </Alert>}
-                <Tasks taskList={taskList} completedTaskList={completedTaskList} editingTaskId={editingTaskId}
+                <Tasks taskList={taskList}
+                       editingTaskId={editingTaskId}
+                       showPriorityDropdown={showPriorityDropdown}
+                       onPriorityDropdownToggle={toggleShowPriorityDropdown}
+                       tabIndex={tabIndex}
+                       setTabIndex={setTabIndex}
                        onEditTask={handleEditTask}
                        onCompletedTask={handleSetCompletedTask}
-                       onToggleEditTaskId={handleEditTaskToggle}
                        onDeleteTask={handleDeleteTask}
                        toggleModal={toggleModal}
                        showAlert={showAlert}></Tasks>
             </div>
-            <div className="footer">
-                <Footer onAddTask={handleAddTask}></Footer>
-            </div>
+            {tabIndex !== 2 &&
+                <div className="footer">
+                    <Footer onAddTask={handleAddTask}
+                            showPriorityDropdown={showPriorityDropdown}
+                            onPriorityDropdownToggle={toggleShowPriorityDropdown}></Footer>
+                </div>
+            }
         </div>
     )
 

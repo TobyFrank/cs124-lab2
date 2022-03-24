@@ -9,8 +9,11 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    word-wrap:anywhere;
+    word-wrap: anywhere;
+}
 
+.listItem > * {
+    margin: 0vh 1vw;
 }
 
 .task {
@@ -25,6 +28,7 @@
     /*border-color: black;*/
     font-size: 12pt;
     /*border-bottom: #65C18C;*/
+    flex-grow: 10;
 }
 
 .task.editing {
@@ -35,10 +39,6 @@
     border-style: solid;
     border-color: black;
     font-size: 12pt;
-    flex-grow: 10;
-}
-
-.taskName {
     flex-grow: 10;
 }
 
@@ -55,3 +55,40 @@
 .deleteIcon {
     height: 20px;
 }
+
+.priorityIcon {
+    height: 20px;
+}
+
+.priorityDropdown img {
+    height: 20px;
+    padding: 6px 8px;
+    display: block;
+}
+
+.priorityDropdown {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    background-color: white;
+    min-width: 50px;
+    right: 70px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/*.introMessage {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
+
+.helpIcon {
+    margin-top: 25px;
+    height: 20px;
+}
+
+.selectedPriority {
+    background-color: #e8e8e8;
+}
+
+.priorityDropdown img:hover {background-color: #f1f1f1}
+

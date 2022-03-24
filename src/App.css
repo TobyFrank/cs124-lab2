@@ -9,6 +9,18 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
+    /* comment */
+}
+
+.tasks {
+    z-index: 1;
+}
+
+.header {
+    position: sticky;
+    background-color: #65C18C;
+    flex-direction: column;
+    z-index: 2;
 }
 
 /*.header {*/

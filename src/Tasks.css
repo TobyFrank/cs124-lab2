@@ -2,6 +2,10 @@
     flex-grow: 1;
 }
 
+TabList {
+    z-index: 1;
+}
+
 .react-tabs {
     height: 100%;
     background-color: #C1F4C5;
@@ -15,4 +19,15 @@
 
 .react-tabs__tab.react-tabs__tab--selected {
     background-color: #C1F4C5;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 3px;
+}
+
+.legendItem {
+    border: 2vw;
 }
