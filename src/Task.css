@@ -65,7 +65,7 @@
     height: 20px;
 }
 
-.priorityDropdown img {
+.priorityDropdown input {
     height: 20px;
     padding: 6px 8px;
     display: block;

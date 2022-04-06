@@ -32,7 +32,7 @@ function TaskList(props) {
                                                                                      onDeleteTask={props.onDeleteTask}
                                                                                      toggleModal={props.toggleModal}/>)
                     }
-                    {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Delete All Completed Tasks</button>}
+                    {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Delete Completed</button>}
                 </div>}
         </div>
     )

@@ -15,30 +15,30 @@ function Header(props) {
                     <img className={"filterIcon"} src={filterIcon} alt={"filterIcon"}></img>
                     </button>
                 {props.showSortDropdown && <div className={"paramDropdown"}>
-                    <span className={"sortDirection"}
+                    <button className={"sortDirection"}
                        onClick={(e) => {
                            props.onSortDirectionToggle();
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>{props.sortDirection === "asc" ? "^ Sort Asc ^" : "v Sort Desc v"}</span>
-                    <span className={props.sortParam === "text" ? "currentParam" : "param"}
+                       }}>{props.sortDirection === "asc" ? "^ Sort Asc ^" : "v Sort Desc v"}</button>
+                    <button className={props.sortParam === "text" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("text");
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>Alphabetical</span>
-                    <span className={props.sortParam === "priority" ? "currentParam" : "param"}
+                       }}>Alphabetical</button>
+                    <button className={props.sortParam === "priority" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("priority");
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>Priority</span>
-                    <span className={props.sortParam === "created" ? "currentParam" : "param"}
+                       }}>Priority</button>
+                    <button className={props.sortParam === "created" ? "currentParam" : "param"}
                        onClick={(e) => {
                            props.onSortParamChange("created");
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>Add Date</span>
+                       }}>Add Date</button>
                 </div>}
             </div>
         </div>
