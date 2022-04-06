@@ -13,6 +13,14 @@
     display: inline;
 }
 
+@media screen and (max-width: 1600px) {
+    .headerText {
+        font-size: 48px;
+        margin: 1vw;
+    }
+}
+
+
 .filterIcon {
     width: 25px;
 }

@@ -10,6 +10,7 @@
     border-width: 1px;
     border-radius: 5px;
     word-wrap: anywhere;
+    align-self: center;
 }
 
 .listItem > * {
@@ -29,6 +30,10 @@
     font-size: 12pt;
     /*border-bottom: #65C18C;*/
     flex-grow: 10;
+}
+
+.checkbox {
+    margin-top: 0.25vh;
 }
 
 .task.editing {
@@ -76,15 +81,10 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-/*.introMessage {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
+/*.helpIcon {*/
+/*    margin-top: 25px;*/
+/*    height: 20px;*/
 /*}*/
-
-.helpIcon {
-    margin-top: 25px;
-    height: 20px;
-}
 
 .selectedPriority {
     background-color: #e8e8e8;

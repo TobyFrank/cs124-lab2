@@ -17,7 +17,7 @@ function Task(props) {
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
-            <input type="checkbox" checked={props.isChecked} onChange={(e) => props.onCompletedTask(taskData.id)}></input>
+            <input type="checkbox" className={"checkbox"} checked={props.isChecked} onChange={(e) => props.onCompletedTask(taskData.id)}></input>
             {props.editingTaskId === taskData.id ?
                 <input id={taskData.id}
                        className={"task editing"}
