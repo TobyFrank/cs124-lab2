@@ -12,7 +12,7 @@ function Header(props) {
                             e.stopPropagation();
                             e.preventDefault();
                         }}>
-                    <img className={"filterIcon"} src={filterIcon} alt={"filterIcon"}></img>
+                    <img className={"filterIcon"} src={filterIcon} alt={"filter tasks"}></img>
                     </button>
                 {props.showSortDropdown && <div className={"paramDropdown"}>
                     <button className={"sortDirection"}

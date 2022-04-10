@@ -39,8 +39,8 @@ function App() {
     const q = query(collection(db, collectionName), orderBy(sortParam, sortDirection));
     const [taskList, loading] = useCollectionData(q);
 
-    function handleEditTask(taskId, field, value, colPath) {
-        setDoc(doc(db, colPath),
+    function handleEditTask(taskId, field, value, dbPath) {
+        setDoc(doc(db, dbPath),
             {[field]: value},
             {merge: true});
         if (field === "text") {
@@ -56,30 +56,30 @@ function App() {
         }
     }
 
-    function handleSetCompletedTask(taskId, colPath) {
-        setDoc(doc(db, colPath),
+    function handleSetCompletedTask(taskId, dbPath) {
+        setDoc(doc(db, dbPath),
             {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
     }
 
-    function handleAddTask(taskInfo, colPath, isTaskList) {
-        const [taskText, taskPriority] = taskInfo;
+    function handleAddTask(taskInfo, dbPath) {
+        const [taskText, taskPriority, isList] = taskInfo;
         const id = generateUniqueID();
-        setDoc(doc(db, colPath.concat("/", id)),
+        setDoc(doc(db, dbPath.concat("/", id)),
             {
                 id: id,
                 text: taskText,
                 completed: false,
                 created: serverTimestamp(),
                 priority: taskPriority,
-                list: isTaskList
+                isList: isList
             });
     }
 
-    function handleDeleteTask(ifDeleteAll, colPath) {
+    function handleDeleteTask(ifDeleteAll, dbPath) {
         if (ifDeleteAll) {
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
-            deleteDoc(doc(db, colPath))
+            deleteDoc(doc(db, dbPath))
         }
     }
 
