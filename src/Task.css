@@ -11,10 +11,21 @@
     border-radius: 5px;
     word-wrap: anywhere;
     align-self: center;
+    /*vertical-align: middle;*/
 }
 
 .listItem > * {
     margin: 0vh 1vw;
+}
+
+.taskList {
+    /*padding: 0px;*/
+    /*margin: 0px;*/
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    flex-grow: 10;
 }
 
 .task {
@@ -29,11 +40,13 @@
     /*border-color: black;*/
     font-size: 12pt;
     /*border-bottom: #65C18C;*/
-    flex-grow: 10;
 }
 
 .checkbox {
-    margin-top: 0.25vh;
+    /*margin-top: 0.25vh;*/
+    transform: translateY(50%);
+    vertical-align: middle;
+    /*position: relative;*/
 }
 
 .task.editing {

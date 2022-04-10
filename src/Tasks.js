@@ -7,9 +7,9 @@ function Tasks(props) {
     return (
         <Tabs selectedIndex={props.tabIndex} onSelect={index => props.setTabIndex(index)}>
             <TabList>
-                <Tab>Incomplete</Tab>
-                <Tab>All</Tab>
-                <Tab>Complete</Tab>
+                <Tab tabIndex={"0"}>Incomplete</Tab>
+                <Tab tabIndex={"0"}>All</Tab>
+                <Tab tabIndex={"0"}>Complete</Tab>
             </TabList>
 
             <TabPanel>
