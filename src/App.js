@@ -71,10 +71,10 @@ function App() {
         }
     }
 
-    function handleSetCompletedTask(taskId, dbPath) {
-        setDoc(doc(db, dbPath),
-            {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
-    }
+    // function handleSetCompletedTask(taskId, dbPath) {
+    //     setDoc(doc(db, dbPath),
+    //         {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
+    // }
 
     function handleAddTask(taskInfo, dbPath) {
         const [taskText, taskPriority, isList] = taskInfo;
@@ -90,12 +90,12 @@ function App() {
             });
     }
 
-    function handleDeleteTask(taskId, ifDeleteAll) {
+    function handleDeleteTask(dbPath, ifDeleteAll) {
         if (ifDeleteAll) {
             console.log("delete all");
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
-            deleteDoc(doc(db, collectionName, taskId))
+            deleteDoc(doc(db, dbPath))
         }
     }
 
@@ -162,11 +162,11 @@ function App() {
                        tabIndex={tabIndex}
                        setTabIndex={setTabIndex}
                        onEditTask={handleEditTask}
-                       onCompletedTask={handleSetCompletedTask}
                        onDeleteTask={handleDeleteTask}
                        toggleModal={toggleModal}
                        showAlert={showAlert}
-                       onExpandTaskList={handleSubtaskChange}></Tasks>
+                       onExpandTaskList={handleSubtaskChange}
+                       onAddTask={handleAddTask}></Tasks>
             </div>
             {tabIndex !== 2 &&
                 <div className="footer">

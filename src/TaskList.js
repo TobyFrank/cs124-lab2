@@ -19,10 +19,10 @@ function TaskList(props) {
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       editingTaskText={props.editingTaskText}
                                                                                       onEditTask={props.onEditTask}
-                                                                                      onCompletedTask={props.onCompletedTask}
                                                                                       onDeleteTask={props.onDeleteTask}
                                                                                       toggleModal={props.toggleModal}
-                                                                                      onExpandTaskList={props.onExpandTaskList}/>)
+                                                                                      onExpandTaskList={props.onExpandTaskList}
+                                                                                      onAddTask={props.onAddTask}/>)
                     }
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      taskData={task}
@@ -34,10 +34,10 @@ function TaskList(props) {
                                                                                      editingTaskId={props.editingTaskId}
                                                                                      editingTaskText={props.editingTaskText}
                                                                                      onEditTask={props.onEditTask}
-                                                                                     onCompletedTask={props.onCompletedTask}
                                                                                      onDeleteTask={props.onDeleteTask}
                                                                                      toggleModal={props.toggleModal}
-                                                                                     onExpandTaskList={props.onExpandTaskList}/>)
+                                                                                     onExpandTaskList={props.onExpandTaskList}
+                                                                                     onAddTask={props.onAddTask}/>)
                     }
                     {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Delete Completed</button>}
                 </div>}

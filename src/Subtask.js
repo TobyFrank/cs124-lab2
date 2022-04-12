@@ -86,7 +86,7 @@ function Subtask(props) {
                    aria-label="delete task"
                    src={deleteIcon}
                    alt="delete"
-                   onClick={(e) => props.toggleModal(taskData.id, false)}></input>
+                   onClick={(e) => props.toggleModal(dbPath, false)}></input>
         </div>
     )
 

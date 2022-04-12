@@ -23,11 +23,11 @@ function Tasks(props) {
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
-                          onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={false}
-                          onExpandTaskList={props.onExpandTaskList}></TaskList>
+                          onExpandTaskList={props.onExpandTaskList}
+                          onAddTask={props.onAddTask}></TaskList>
             </TabPanel>
             <TabPanel>
                 <TaskList key="All"
@@ -40,11 +40,11 @@ function Tasks(props) {
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
-                          onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={true}
-                          onExpandTaskList={props.onExpandTaskList}></TaskList>
+                          onExpandTaskList={props.onExpandTaskList}
+                          onAddTask={props.onAddTask}></TaskList>
             </TabPanel>
             <TabPanel>
                 <TaskList key="Complete"
@@ -57,11 +57,11 @@ function Tasks(props) {
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
-                          onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
                           showDeleteButton={true}
-                          onExpandTaskList={props.onExpandTaskList}></TaskList>
+                          onExpandTaskList={props.onExpandTaskList}
+                          onAddTask={props.onAddTask}></TaskList>
             </TabPanel>
         </Tabs>
     )
