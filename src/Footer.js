@@ -11,8 +11,8 @@ function Footer(props) {
         3: highPriorityIcon
     }
 
-    const [taskToAdd, setTaskToAdd] = useState(["New Task", 1, false]);
     const dbPath = "cs124-lab3";
+    const [taskToAdd, setTaskToAdd] = useState(["New Task", 1, false]);
 
     return (
         <div className="addTaskSection">
@@ -27,44 +27,11 @@ function Footer(props) {
                        }
                    }}
                    value={taskToAdd[0]}></input>
-            <img type="image"
+            <input type="image"
                    className="addPriorityIcon"
                    src={priorityDict[taskToAdd[1]]}
                    alt={"priority"}
-                   onClick={(e ) => {
-                       props.onPriorityDropdownToggle("addingTask");
-                       e.stopPropagation();
-                       e.preventDefault();
-                   }}></img>
-            {props.showPriorityDropdown === "addingTask" && <div className="priorityDropdown">
-                <img src={priorityDict[1]}
-                     className={taskToAdd[1] === 1 ? "selectedPriority" : "lowPriority"}
-                     alt={"lowPriority"}
-                     onClick={(e ) => {
-                         setTaskToAdd([taskToAdd[0], 1, taskToAdd[2]]);
-                         props.onPriorityDropdownToggle("addingTask");
-                         e.stopPropagation();
-                         e.preventDefault();
-                     }}></img>
-                <img src={priorityDict[2]}
-                     className={taskToAdd[1] === 2 ? "selectedPriority" : "medPriority"}
-                     alt={"medPriority"}
-                     onClick={(e ) => {
-                         setTaskToAdd([taskToAdd[0], 2, taskToAdd[2]]);
-                         props.onPriorityDropdownToggle("addingTask");
-                         e.stopPropagation();
-                         e.preventDefault();
-                     }}></img>
-                <img src={priorityDict[3]}
-                     className={taskToAdd[1] === 3 ? "selectedPriority" : "highPriority"}
-                     alt={"highPriority"}
-                     onClick={(e ) => {
-                         setTaskToAdd([taskToAdd[0], 3, taskToAdd[2]]);
-                         props.onPriorityDropdownToggle("addingTask");
-                         e.stopPropagation();
-                         e.preventDefault();
-                     }}></img>
-            </div>}
+                   onClick={(e ) => setTaskToAdd([taskToAdd[0], (taskToAdd[1]+1)%3+1, taskToAdd[2]])}></input>
             <button className={"addTaskButton"} type={"button"} onClick={(e) => {
                 props.onAddTask(taskToAdd, dbPath);
                 setTaskToAdd(["New Task", taskToAdd[1], false]);

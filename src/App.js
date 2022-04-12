@@ -30,7 +30,6 @@ const collectionName = "cs124-lab3";
 function App() {
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
-    const [showPriorityDropdown, setShowPriorityDropdown] = useState("");
     const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [tabIndex, setTabIndex] = useState(1);
     const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
@@ -77,6 +76,7 @@ function App() {
     // }
 
     function handleAddTask(taskInfo, dbPath) {
+        console.log("add");
         const [taskText, taskPriority, isList] = taskInfo;
         const id = generateUniqueID();
         setDoc(doc(db, dbPath.concat("/", id)),
@@ -86,7 +86,9 @@ function App() {
                 completed: false,
                 created: serverTimestamp(),
                 priority: taskPriority,
-                isList: isList
+                isList: isList,
+                numSubtasks: 0,
+                numCompletedSubtasks: 0
             });
     }
 
@@ -111,14 +113,6 @@ function App() {
         setSortParam(sortBy);
     }
 
-    function toggleShowPriorityDropdown(taskId) {
-        if (showPriorityDropdown === taskId) {
-            setShowPriorityDropdown("");
-        } else {
-            setShowPriorityDropdown(taskId);
-        }
-    }
-
     function toggleShowSortDropdown(ifShow) {
         setShowSortDropdown(ifShow);
     }
@@ -132,10 +126,7 @@ function App() {
         return <div className={"loading"}>Loading Task List...</div>
     }
     return (
-        <div className={"app"} onClick={(e) => {
-            toggleShowPriorityDropdown("");
-            toggleShowSortDropdown(false);
-        }}>
+        <div className={"app"} onClick={(e) => toggleShowSortDropdown(false)}>
             <div className={"header"}>
                 <Header sortParam={sortParam}
                         onSortParamChange={handleChangeSortParam}
@@ -157,8 +148,6 @@ function App() {
                        subtaskList={subtaskList}
                        subtaskId={subtaskId}
                        editingTaskId={editingTaskId}
-                       showPriorityDropdown={showPriorityDropdown}
-                       onPriorityDropdownToggle={toggleShowPriorityDropdown}
                        tabIndex={tabIndex}
                        setTabIndex={setTabIndex}
                        onEditTask={handleEditTask}
@@ -170,9 +159,7 @@ function App() {
             </div>
             {tabIndex !== 2 &&
                 <div className="footer">
-                    <Footer onAddTask={handleAddTask}
-                            showPriorityDropdown={showPriorityDropdown}
-                            onPriorityDropdownToggle={toggleShowPriorityDropdown}></Footer>
+                    <Footer onAddTask={handleAddTask}></Footer>
                 </div>
             }
         </div>

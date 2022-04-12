@@ -18,8 +18,6 @@ function Tasks(props) {
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no tasks to complete."}
-                          showPriorityDropdown={props.showPriorityDropdown}
-                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
@@ -35,8 +33,6 @@ function Tasks(props) {
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no tasks yet! Try adding some below."}
-                          showPriorityDropdown={props.showPriorityDropdown}
-                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}
@@ -52,8 +48,6 @@ function Tasks(props) {
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no completed tasks."}
-                          showPriorityDropdown={props.showPriorityDropdown}
-                          onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                           editingTaskId={props.editingTaskId}
                           editingTaskText={props.editingTaskText}
                           onEditTask={props.onEditTask}

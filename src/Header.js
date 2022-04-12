@@ -38,7 +38,7 @@ function Header(props) {
                            props.onSortParamChange("created");
                            e.stopPropagation();
                            e.preventDefault();
-                       }}>Add Date</button>
+                       }}>Date Created</button>
                 </div>}
             </div>
         </div>

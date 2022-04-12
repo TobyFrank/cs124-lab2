@@ -21,6 +21,7 @@ function Task(props) {
     const dbPath = "cs124-lab3".concat("/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     const [taskToAdd, setTaskToAdd] = useState(["New Task", 1, false]);
+
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
             <input type="checkbox" className={"checkbox"} checked={props.isChecked}
@@ -40,17 +41,28 @@ function Task(props) {
                 {props.subtaskId === taskData.id &&
                     <div>
                         {props.subtaskList.map(subtask => <Subtask key={subtask.id}
-                                                                  taskData={subtask}
-                                                                  subtaskId={props.subtaskId}
-                                                                  isChecked={subtask.completed}
-                                                                  showPriorityDropdown={props.showPriorityDropdown}
-                                                                  onPriorityDropdownToggle={props.onPriorityDropdownToggle}
-                                                                  editingTaskId={props.editingTaskId}
-                                                                  editingTaskText={props.editingTaskText}
-                                                                  onEditTask={props.onEditTask}
-                                                                  onDeleteTask={props.onDeleteTask}
-                                                                  toggleModal={props.toggleModal}></Subtask>)}
-                        <div className={"addTaskSelection"}>
+                                                                   taskData={subtask}
+                                                                   subtaskId={props.subtaskId}
+                                                                   isChecked={subtask.completed}
+                                                                   showPriorityDropdown={props.showPriorityDropdown}
+                                                                   onPriorityDropdownToggle={props.onPriorityDropdownToggle}
+                                                                   editingTaskId={props.editingTaskId}
+                                                                   editingTaskText={props.editingTaskText}
+                                                                   onEditTask={props.onEditTask}
+                                                                   onDeleteTask={props.onDeleteTask}
+                                                                   toggleModal={props.toggleModal}
+                                                                   parentTaskData={taskData}></Subtask>)}
+                        <div className={"addSubtaskSelection"}>
+                            <input className={"addSubtaskButton"}
+                                   type={"image"}
+                                   src={deleteIcon}
+                                   alt={"add subtask"}
+                                   aria-label="add subtask"
+                                   onClick={(e) => {
+                                       props.onAddTask(taskToAdd, dbPath.concat("/subtaskCollection"));
+                                       props.onEditTask(taskData.id, "numSubtasks", taskData.numSubtasks + 1, dbPath)
+                                       setTaskToAdd(["New Task", taskToAdd[1], false]);
+                            }}></input>
                             <input className={"addTask"}
                                    onClick={(e) =>
                                        taskToAdd[0] === "New Task" && setTaskToAdd(["", taskToAdd[1], taskToAdd[2]])}
@@ -62,96 +74,22 @@ function Task(props) {
                                        }
                                    }}
                                    value={taskToAdd[0]}></input>
-                            <img type="image"
-                                 className="addPriorityIcon"
+                            <input type="image"
+                                 className="priorityIcon"
                                  src={priorityDict[taskToAdd[1]]}
                                  alt={"priority"}
-                                 onClick={(e ) => {
-                                     props.onPriorityDropdownToggle("addingTask".concat(taskData.id));
-                                     e.stopPropagation();
-                                     e.preventDefault();
-                                 }}></img>
-                            {props.showPriorityDropdown === "addingTask".concat(taskData.id) &&
-                                <div className="priorityDropdown">
-                                    <img src={priorityDict[1]}
-                                         className={taskToAdd[1] === 1 ? "selectedPriority" : "lowPriority"}
-                                         alt={"lowPriority"}
-                                         onClick={(e ) => {
-                                             setTaskToAdd([taskToAdd[0], 1, taskToAdd[2]]);
-                                             props.onPriorityDropdownToggle("addingTask".concat(taskData.id));
-                                             e.stopPropagation();
-                                             e.preventDefault();
-                                         }}></img>
-                                    <img src={priorityDict[2]}
-                                             className={taskToAdd[1] === 2 ? "selectedPriority" : "medPriority"}
-                                             alt={"medPriority"}
-                                             onClick={(e ) => {
-                                                 setTaskToAdd([taskToAdd[0], 2, taskToAdd[2]]);
-                                                 props.onPriorityDropdownToggle("addingTask".concat(taskData.id));
-                                                 e.stopPropagation();
-                                                 e.preventDefault();
-                                             }}></img>
-                                        <img src={priorityDict[3]}
-                                             className={taskToAdd[1] === 3 ? "selectedPriority" : "highPriority"}
-                                             alt={"highPriority"}
-                                             onClick={(e ) => {
-                                                 setTaskToAdd([taskToAdd[0], 3, taskToAdd[2]]);
-                                                 props.onPriorityDropdownToggle("addingTask".concat(taskData.id));
-                                                 e.stopPropagation();
-                                                 e.preventDefault();
-                                             }}></img>
-                                </div>}
-                            <button className={"addTaskButton"} type={"button"} onClick={(e) => {
-                                props.onAddTask(taskToAdd, dbPath.concat("/subtaskCollection"));
-                                setTaskToAdd(["New Task", taskToAdd[1], false]);
-                            }}>Add Task</button>
+                                 onClick={(e ) => setTaskToAdd([taskToAdd[0], (taskToAdd[1]+1)%3+1, taskToAdd[2]])}></input>
+
                         </div>
                     </div>
                 }
             </span>
-            {taskData.list ? <div></div> : <div></div>}
+            <span>{taskData.numCompletedSubtasks}/{taskData.numSubtasks}</span>
             <input type="image"
                    className="priorityIcon"
                    src={priorityDict[taskData.priority]}
                    alt={"priority"}
-                   onClick={(e) => {
-                       props.onPriorityDropdownToggle(taskData.id);
-                       e.stopPropagation();
-                       e.preventDefault();
-                   }}></input>
-            {props.showPriorityDropdown === taskData.id && <div className="priorityDropdown">
-                <input type={"image"}
-                       src={priorityDict[1]}
-                       className={taskData.priority === 1 ? "selectedPriority" : "lowPriority"}
-                       alt={"lowPriority"}
-                       onClick={(e) => {
-                           props.onEditTask(taskData.id, "priority", 1, dbPath);
-                           props.onPriorityDropdownToggle(taskData.id);
-                           e.stopPropagation();
-                           e.preventDefault();
-                       }}></input>
-                <input type={"image"}
-                       src={priorityDict[2]}
-                       className={taskData.priority === 2 ? "selectedPriority" : "medPriority"}
-                       alt={"medPriority"}
-                       onClick={(e) => {
-                           props.onEditTask(taskData.id, "priority", 2, dbPath);
-                           props.onPriorityDropdownToggle(taskData.id);
-                           e.stopPropagation();
-                           e.preventDefault();
-                       }}></input>
-                <input type={"image"}
-                       src={priorityDict[3]}
-                       className={taskData.priority === 3 ? "selectedPriority" : "highPriority"}
-                       alt={"highPriority"}
-                       onClick={(e) => {
-                           props.onEditTask(taskData.id, "priority", 3, dbPath);
-                           props.onPriorityDropdownToggle(taskData.id);
-                           e.stopPropagation();
-                           e.preventDefault();
-                       }}></input>
-            </div>
-            }
+                   onClick={(e) => props.onEditTask(taskData.id, "priority", (taskData.priority+1)%3+1, dbPath)}></input>
             <input type="image" className="editIcon"
                    aria-label="edit task"
                    src={editIcon}
