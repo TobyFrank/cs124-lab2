@@ -5,6 +5,9 @@ import deleteIcon from "./delete.png";
 import lowPriorityIcon from "./lowPriority.png";
 import medPriorityIcon from "./medPriority.png";
 import highPriorityIcon from "./highPriority.png";
+import minimizeIcon from "./minimize.png";
+import expandIcon from "./expand.png";
+
 
 import {useState} from "react";
 
@@ -162,9 +165,9 @@ function Task(props) {
                    src={deleteIcon}
                    alt="delete"
                    onClick={(e) => props.toggleModal(dbPath, false)}></input>
-            <input type="image" className="deleteIcon"
+            <input type="image" className="minimizeIcon"
                    aria-label="expand task list"
-                   src={deleteIcon}
+                   src={props.subtaskId === taskData.id ? minimizeIcon : expandIcon}
                    alt="delete"
                    onClick={(e) => {
                        props.onExpandTaskList(taskData.id);
