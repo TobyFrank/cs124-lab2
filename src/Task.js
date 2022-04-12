@@ -7,6 +7,7 @@ import medPriorityIcon from "./medPriority.png";
 import highPriorityIcon from "./highPriority.png";
 import minimizeIcon from "./minimize.png";
 import expandIcon from "./expand.png";
+import addSubtaskIcon from "./AddButton.png";
 
 
 import {useState} from "react";
@@ -53,14 +54,13 @@ function Task(props) {
                                                                    toggleModal={props.toggleModal}
                                                                    parentTaskData={taskData}></Subtask>)}
                         <div className={"addSubtaskSelection"}>
-                            <input className={"addSubtaskButton"}
+                            <input className={"subtaskIcon"}
                                    type={"image"}
-                                   src={deleteIcon}
+                                   src={addSubtaskIcon}
                                    alt={"add subtask"}
                                    aria-label="add subtask"
                                    onClick={(e) => {
                                        props.onAddTask(taskToAdd, dbPath.concat("/subtaskCollection"));
-                                       props.onEditTask(taskData.id, "numSubtasks", taskData.numSubtasks + 1, dbPath)
                                        setTaskToAdd(["New Task", taskToAdd[1], false]);
                             }}></input>
                             <input className={"addTask"}
@@ -75,7 +75,7 @@ function Task(props) {
                                    }}
                                    value={taskToAdd[0]}></input>
                             <input type="image"
-                                 className="priorityIcon"
+                                 className="subtaskIcon"
                                  src={priorityDict[taskToAdd[1]]}
                                  alt={"priority"}
                                  onClick={(e ) => setTaskToAdd([taskToAdd[0], (taskToAdd[1]+1)%3+1, taskToAdd[2]])}></input>
@@ -84,7 +84,6 @@ function Task(props) {
                     </div>
                 }
             </span>
-            <span>{taskData.numCompletedSubtasks}/{taskData.numSubtasks}</span>
             <input type="image"
                    className="priorityIcon"
                    src={priorityDict[taskData.priority]}

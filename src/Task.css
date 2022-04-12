@@ -38,10 +38,21 @@
 .addSubtaskSelection {
     display: flex;
     flex-direction: row;
+    /*justify-content: space-between;*/
+    column-gap: 0.2vw;
+    padding: 1vh;
+    margin: 0.5vh 0vw;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    word-wrap: anywhere;
+    vertical-align: middle;
 }
 
-.addSubtaskButton {
+.subtaskIcon {
     width: 20px;
+    height: 20px;
+    align-self: center;
 }
 
 .checkbox {
@@ -69,14 +80,17 @@
 }
 
 .editIcon {
+    width: 20px;
     height: 20px;
 }
 
 .deleteIcon {
+    width: 20px;
     height: 20px;
 }
 
 .priorityIcon {
+    width: 20px;
     height: 20px;
 }
 

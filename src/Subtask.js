@@ -17,13 +17,7 @@ function Subtask(props) {
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
             <input type="checkbox" className={"checkbox"} checked={props.isChecked}
-                   onChange={(e) => {
-                       props.onEditTask(taskData.id, "completed", !taskData.completed, dbPath);
-                       props.onEditTask(props.parentTaskData.id,
-                           "numCompletedSubtasks",
-                           (taskData.completed ? props.parentTaskData.numCompletedSubtasks - 1 : props.parentTaskData.numCompletedSubtasks + 1),
-                           "cs124-lab3".concat("/", props.parentTaskData.id));
-                   }}></input>
+                   onChange={(e) => props.onEditTask(taskData.id, "completed", !taskData.completed, dbPath)}></input>
             <span className={"taskFlex"}>
                 {props.editingTaskId === taskData.id ?
                     <input id={taskData.id}
@@ -55,11 +49,7 @@ function Subtask(props) {
                    aria-label="delete task"
                    src={deleteIcon}
                    alt="delete"
-                   onClick={(e) => {
-                       props.toggleModal(dbPath, false);
-                       props.onEditTask(props.parentTaskData.id, "numSubtasks", props.parentTaskData.numSubtasks - 1, "cs124-lab3".concat("/", props.parentTaskData.id))
-                       {taskData.complete && props.onEditTask(props.parentTaskData.id, "numCompletedSubtasks", props.parentTaskData.numCompletedSubtasks - 1, "cs124-lab3".concat("/", props.parentTaskData.id))}
-                   }}></input>
+                   onClick={(e) => props.toggleModal(dbPath, false)}></input>
         </div>
     )
 

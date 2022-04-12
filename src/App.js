@@ -86,9 +86,7 @@ function App() {
                 completed: false,
                 created: serverTimestamp(),
                 priority: taskPriority,
-                isList: isList,
-                numSubtasks: 0,
-                numCompletedSubtasks: 0
+                isList: isList
             });
     }
 
