@@ -37,7 +37,22 @@ function App() {
     const [sortDirection, setSortDirection] = useState("asc");
     const [sortParam, setSortParam] = useState("text");
     const q = query(collection(db, collectionName), orderBy(sortParam, sortDirection));
-    const [taskList, loading] = useCollectionData(q);
+    const [qSubParams, setQSubParams] = useState([db, collectionName, "", ""]);
+    const [subtaskId, setSubtaskId] = useState("");
+    const qSub = query(collection(qSubParams[0], qSubParams[1], qSubParams[2], qSubParams[3]));
+    const [taskList, loadingTask] = useCollectionData(q);
+    const [subtaskList, loadingSubtask] = useCollectionData(qSub);
+
+    function handleSubtaskChange(taskId) {
+        const queryParam = [db, collectionName, taskId, "subtaskCollection"]
+        if (queryParam[2] === qSubParams[2]) {
+            setQSubParams([db, collectionName, "", ""]);
+            setSubtaskId("");
+        } else {
+            setQSubParams(queryParam);
+            setSubtaskId(taskId);
+        }
+    }
 
     function handleEditTask(taskId, field, value, dbPath) {
         setDoc(doc(db, dbPath),
@@ -75,11 +90,12 @@ function App() {
             });
     }
 
-    function handleDeleteTask(ifDeleteAll, dbPath) {
+    function handleDeleteTask(taskId, ifDeleteAll) {
         if (ifDeleteAll) {
+            console.log("delete all");
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
-            deleteDoc(doc(db, dbPath))
+            deleteDoc(doc(db, collectionName, taskId))
         }
     }
 
@@ -112,7 +128,7 @@ function App() {
         setShowAlert(!showAlert);
     }
 
-    if (loading) {
+    if (loadingTask || loadingSubtask) {
         return <div className={"loading"}>Loading Task List...</div>
     }
     return (
@@ -138,6 +154,8 @@ function App() {
             </Alert>}
             <div className={"tasks"}>
                 <Tasks taskList={taskList}
+                       subtaskList={subtaskList}
+                       subtaskId={subtaskId}
                        editingTaskId={editingTaskId}
                        showPriorityDropdown={showPriorityDropdown}
                        onPriorityDropdownToggle={toggleShowPriorityDropdown}
@@ -147,7 +165,8 @@ function App() {
                        onCompletedTask={handleSetCompletedTask}
                        onDeleteTask={handleDeleteTask}
                        toggleModal={toggleModal}
-                       showAlert={showAlert}></Tasks>
+                       showAlert={showAlert}
+                       onExpandTaskList={handleSubtaskChange}></Tasks>
             </div>
             {tabIndex !== 2 &&
                 <div className="footer">

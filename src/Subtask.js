@@ -1,21 +1,18 @@
-import "./Task.css";
-import Subtask from "./Subtask.js";
-import editIcon from "./edit.png";
-import deleteIcon from "./delete.png";
 import lowPriorityIcon from "./lowPriority.png";
 import medPriorityIcon from "./medPriority.png";
 import highPriorityIcon from "./highPriority.png";
-
 import {useState} from "react";
+import editIcon from "./edit.png";
+import deleteIcon from "./delete.png";
 
-function Task(props) {
+function Subtask(props) {
     const priorityDict = {
         1: lowPriorityIcon,
         2: medPriorityIcon,
         3: highPriorityIcon
     }
     const taskData = props.taskData;
-    const dbPath = "cs124-lab3".concat("/", taskData.id);
+    const dbPath = "cs124-lab3".concat("/", props.subtaskId, "/subtaskCollection/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
@@ -33,19 +30,6 @@ function Task(props) {
                            value={editingTaskText}></input> :
                     <span id={taskData.id} className="task">{editingTaskText}</span>
                 }
-                {props.subtaskId === taskData.id &&
-                    props.subtaskList.map(subtask => <Subtask key={subtask.id}
-                                                              taskData={subtask}
-                                                              subtaskId={props.subtaskId}
-                                                              isChecked={subtask.completed}
-                                                              showPriorityDropdown={props.showPriorityDropdown}
-                                                              onPriorityDropdownToggle={props.onPriorityDropdownToggle}
-                                                              editingTaskId={props.editingTaskId}
-                                                              editingTaskText={props.editingTaskText}
-                                                              onEditTask={props.onEditTask}
-                                                              onCompletedTask={props.onCompletedTask}
-                                                              onDeleteTask={props.onDeleteTask}
-                                                              toggleModal={props.toggleModal}></Subtask>)}
             </span>
             {taskData.list ? <div></div> : <div></div>}
             <input type="image"
@@ -103,16 +87,18 @@ function Task(props) {
                    src={deleteIcon}
                    alt="delete"
                    onClick={(e) => props.toggleModal(taskData.id, false)}></input>
-            <input type="image" className="deleteIcon"
-                   aria-label="expand task list"
-                   src={deleteIcon}
-                   alt="delete"
-                   onClick={(e) => {
-                       props.onExpandTaskList(taskData.id);
-                       console.log(props.subtaskList);
-                   }}></input>
         </div>
     )
+
+
+
+    // const taskData = props.taskData;
+    // return (
+    //     <div>
+    //         <span>{taskData.id}</span>
+    //         <span>{taskData.text}</span>
+    //     </div>
+    // )
 }
 
-export default Task;
+export default Subtask;

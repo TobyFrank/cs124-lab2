@@ -11,6 +11,8 @@ function TaskList(props) {
                 <div>
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       taskData={task}
+                                                                                      subtaskList={props.subtaskList}
+                                                                                      subtaskId={props.subtaskId}
                                                                                       isChecked={task.completed}
                                                                                       showPriorityDropdown={props.showPriorityDropdown}
                                                                                       onPriorityDropdownToggle={props.onPriorityDropdownToggle}
@@ -19,10 +21,13 @@ function TaskList(props) {
                                                                                       onEditTask={props.onEditTask}
                                                                                       onCompletedTask={props.onCompletedTask}
                                                                                       onDeleteTask={props.onDeleteTask}
-                                                                                      toggleModal={props.toggleModal}/>)
+                                                                                      toggleModal={props.toggleModal}
+                                                                                      onExpandTaskList={props.onExpandTaskList}/>)
                     }
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      taskData={task}
+                                                                                     subtaskList={props.subtaskList}
+                                                                                     subtaskId={props.subtaskId}
                                                                                      isChecked={task.completed}
                                                                                      showPriorityDropdown={props.showPriorityDropdown}
                                                                                      onPriorityDropdownToggle={props.onPriorityDropdownToggle}
@@ -31,7 +36,8 @@ function TaskList(props) {
                                                                                      onEditTask={props.onEditTask}
                                                                                      onCompletedTask={props.onCompletedTask}
                                                                                      onDeleteTask={props.onDeleteTask}
-                                                                                     toggleModal={props.toggleModal}/>)
+                                                                                     toggleModal={props.toggleModal}
+                                                                                     onExpandTaskList={props.onExpandTaskList}/>)
                     }
                     {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Delete Completed</button>}
                 </div>}

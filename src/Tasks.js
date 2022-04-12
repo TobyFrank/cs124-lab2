@@ -13,7 +13,10 @@ function Tasks(props) {
             </TabList>
 
             <TabPanel>
-                <TaskList key="Incomplete" taskList={props.taskList.filter(task => !task.completed)}
+                <TaskList key="Incomplete"
+                          taskList={props.taskList.filter(task => !task.completed)}
+                          subtaskList={props.subtaskList}
+                          subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no tasks to complete."}
                           showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
@@ -23,10 +26,14 @@ function Tasks(props) {
                           onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
-                          showDeleteButton={false}></TaskList>
+                          showDeleteButton={false}
+                          onExpandTaskList={props.onExpandTaskList}></TaskList>
             </TabPanel>
             <TabPanel>
-                <TaskList key="All" taskList={props.taskList}
+                <TaskList key="All"
+                          taskList={props.taskList}
+                          subtaskList={props.subtaskList}
+                          subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no tasks yet! Try adding some below."}
                           showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
@@ -36,10 +43,14 @@ function Tasks(props) {
                           onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
-                          showDeleteButton={true}></TaskList>
+                          showDeleteButton={true}
+                          onExpandTaskList={props.onExpandTaskList}></TaskList>
             </TabPanel>
             <TabPanel>
-                <TaskList key="Complete" taskList={props.taskList.filter(task => task.completed)}
+                <TaskList key="Complete"
+                          taskList={props.taskList.filter(task => task.completed)}
+                          subtaskList={props.subtaskList}
+                          subtaskId={props.subtaskId}
                           emptyMessage={"Looks like you have no completed tasks."}
                           showPriorityDropdown={props.showPriorityDropdown}
                           onPriorityDropdownToggle={props.onPriorityDropdownToggle}
@@ -49,7 +60,8 @@ function Tasks(props) {
                           onCompletedTask={props.onCompletedTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
-                          showDeleteButton={true}></TaskList>
+                          showDeleteButton={true}
+                          onExpandTaskList={props.onExpandTaskList}></TaskList>
             </TabPanel>
         </Tabs>
     )
