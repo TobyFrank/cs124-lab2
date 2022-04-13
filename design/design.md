@@ -1,3 +1,6 @@
+Link to Tabbing through To-Do List Video: https://youtu.be/xVTE79Zm9os
+Link to Screen Reader with To-Do List Video: https://youtu.be/56Y6Ai1Q_48
+
 ### 1. Design Decisions & Rationale
 ---
 
@@ -104,4 +107,4 @@ The part of the lab we're most proud of is our filter. Getting the dropdown in t
 
 Fourth Lab:
 
-The part of the lab we're most proud of is our accessibility labelling. We saw that our priority flags weren't labelled (which meant that users couldn't tell what priority flag they had and if it was low/med/high), and that check buttons, editing buttons, delete buttons, were labelled but didn't tell a user which task they were applying these changes to. I think this was a nuanced issue of not providing context and I'm glad we made sure we addressed it.
+The part of the lab we're most proud of is our accessibility labelling. We saw that our priority flags weren't labelled (which meant that users couldn't tell what priority flag they had and if it was low/med/high), and that check buttons, editing buttons, delete buttons, were labelled but didn't tell a user which task they were applying these changes to. We think this was a nuanced issue of not providing context and we're glad we made sure we addressed it.
