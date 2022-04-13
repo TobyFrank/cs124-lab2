@@ -26,7 +26,7 @@ function Footer(props) {
                    onChange={(e) => setTaskToAdd([e.target.value, taskToAdd[1], taskToAdd[2]])}
                    onKeyDown={(e) => {
                        if (e.code === "Enter") {
-                           props.onAddTask(taskToAdd);
+                           props.onAddTask(taskToAdd, dbPath);
                            setTaskToAdd(["", taskToAdd[1], taskToAdd[2]]);
                        }
                    }}

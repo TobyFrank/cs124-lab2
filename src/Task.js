@@ -106,7 +106,7 @@ function Task(props) {
                                        onChange={(e) => setTaskToAdd([e.target.value, taskToAdd[1], taskToAdd[2]])}
                                        onKeyDown={(e) => {
                                            if (e.code === "Enter") {
-                                               props.onAddTask(taskToAdd);
+                                               props.onAddTask(taskToAdd, dbPath.concat("/subtaskCollection"));
                                                setTaskToAdd(["", taskToAdd[1], taskToAdd[2]]);
                                            }
                                        }}
