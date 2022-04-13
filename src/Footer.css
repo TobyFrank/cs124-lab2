@@ -16,7 +16,6 @@
 
 input.addTask {
     font-family: Futura, sans-serif;
-    font-size: 12pt;
     width: 70%;
     border-width: 0px;
     border-radius: 20px 0px 0px 20px;
@@ -28,7 +27,6 @@ input.addTask {
 
 button.addTaskButton {
     font-family: Futura, sans-serif;
-    /*font-size: 12pt;*/
     background-color: #C1F4C5;
     border-width: 0px;
     border-radius: 0px 20px 20px 0px;
@@ -36,7 +34,6 @@ button.addTaskButton {
     width: 17%;
     padding: 5px;
     margin-right: 2vw;
-    font-size: 12pt;
 }
 
 .addPriorityIcon {

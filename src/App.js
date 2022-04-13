@@ -38,7 +38,7 @@ function App() {
     const q = query(collection(db, collectionName), orderBy(sortParam, sortDirection));
     const [qSubParams, setQSubParams] = useState([db, collectionName, "", ""]);
     const [subtaskId, setSubtaskId] = useState("");
-    const qSub = query(collection(qSubParams[0], qSubParams[1], qSubParams[2], qSubParams[3]));
+    const qSub = query(collection(qSubParams[0], qSubParams[1], qSubParams[2], qSubParams[3]), orderBy("priority"));
     const [taskList, loadingTask] = useCollectionData(q);
     const [subtaskList, loadingSubtask] = useCollectionData(qSub);
 

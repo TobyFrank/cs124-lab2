@@ -10,7 +10,6 @@
     border-radius: 5px;
     word-wrap: anywhere;
     align-self: center;
-    /*vertical-align: middle;*/
 }
 
 .listItem > * {
@@ -18,10 +17,8 @@
 }
 
 .checkbox {
-    /*margin-top: 0.25vh;*/
     transform: translateY(25%);
     vertical-align: middle;
-    /*position: relative;*/
 }
 
 .nonCheckmarkFlex {
@@ -35,15 +32,21 @@
     flex-direction: row;
 }
 
+.taskHeaderFlex > * {
+    margin: 0vh 1vw;
+}
+
 .task.editing {
+    font-family: Futura, sans-serif;
     border-top-width: 0px;
     border-left-width: 0px;
     border-right-width: 0px;
     border-bottom-width: 1px;
     border-style: solid;
     border-color: black;
-    font-size: 12pt;
+    font-size: 11pt;
     flex-grow: 10;
+    outline:none
 }
 
 .task {
@@ -69,6 +72,8 @@
 .priorityIcon {
     width: 20px;
     height: 20px;
+    margin: 0 1vw;
+    self-align: center;
 }
 
 .minimizeIcon {
@@ -86,17 +91,17 @@
 
 input.addSubtask {
     font-family: Futura, sans-serif;
-    font-size: 12pt;
     width: 70%;
     border-width: 0px;
     border-color: #C1F4C5;
     padding: 5px;
+    flex-grow: 10;
+    text-decoration: none;
 }
 
 .addSubtaskSelection {
     display: flex;
     flex-direction: row;
-    /*justify-content: space-between;*/
     column-gap: 0.2vw;
     padding: .5vh;
     margin: 0.75vh 0vw;
@@ -105,11 +110,13 @@ input.addSubtask {
     border-width: 1px;
     word-wrap: anywhere;
     vertical-align: middle;
+    justify-content: space-between;
 }
 
 .addSubtaskIcon {
     width: 20px;
     height: 20px;
     align-self: center;
+    margin: 0 1vw;
 }
 

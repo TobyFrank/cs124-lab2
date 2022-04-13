@@ -17,7 +17,12 @@ function Task(props) {
         0: lowPriorityIcon,
         1: medPriorityIcon,
         2: highPriorityIcon
-    }
+    };
+    const ariaPriorityDict = {
+        0: "low priority",
+        1: "medium priority",
+        2: "high priority"
+    };
     const taskData = props.taskData;
     const dbPath = "cs124-lab3".concat("/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
@@ -25,7 +30,10 @@ function Task(props) {
 
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
-            <input type="checkbox" className={"checkbox"} checked={props.isChecked}
+            <input type="checkbox"
+                   className={"checkbox"}
+                   checked={props.isChecked}
+                   aria-label={"checkbox for ".concat(taskData.text)}
                    onChange={(e) => props.onEditTask(taskData.id, "completed", !taskData.completed, dbPath)}></input>
             <div className={"nonCheckmarkFlex"}>
                 <div className={"taskHeaderFlex"}>
@@ -43,10 +51,11 @@ function Task(props) {
                     <input type="image"
                            className="priorityIcon"
                            src={priorityDict[taskData.priority]}
-                           alt={"priority"}
+                           alt={ariaPriorityDict[taskData.priority]}
+                           aria-label={"priority icon for ".concat(taskData.text, " with ", ariaPriorityDict[taskData.priority])}
                            onClick={(e) => props.onEditTask(taskData.id, "priority", (taskData.priority+1)%3, dbPath)}></input>
                     <input type="image" className="editIcon"
-                           aria-label="edit task"
+                           aria-label={"edit task for ".concat(taskData.text)}
                            src={editIcon}
                            alt="edit"
                            onClick={(e) => {
@@ -54,12 +63,12 @@ function Task(props) {
                                setTimeout(() => document.getElementById(taskData.id).focus(), 10);
                            }}></input>
                     <input type="image" className="deleteIcon"
-                           aria-label="delete task"
+                           aria-label={"delete task for ".concat(taskData.text)}
                            src={deleteIcon}
                            alt="delete"
                            onClick={(e) => props.toggleModal(dbPath, false)}></input>
                     <input type="image" className="minimizeIcon"
-                           aria-label="expand task list"
+                           aria-label={"expand subtask list for ".concat(taskData.text)}
                            src={props.subtaskId === taskData.id ? minimizeIcon : expandIcon}
                            alt="delete"
                            onClick={(e) => {
@@ -105,7 +114,7 @@ function Task(props) {
                                 <input type="image"
                                        className="priorityIcon"
                                        src={priorityDict[taskToAdd[1]]}
-                                       alt={"priority"}
+                                       alt={ariaPriorityDict[taskToAdd[1]]}
                                        onClick={(e ) => setTaskToAdd([taskToAdd[0], (taskToAdd[1]+1)%3, taskToAdd[2]])}></input>
 
                             </div>

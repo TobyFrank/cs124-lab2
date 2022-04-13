@@ -9,8 +9,12 @@ function Footer(props) {
         0: lowPriorityIcon,
         1: medPriorityIcon,
         2: highPriorityIcon
-    }
-
+    };
+    const ariaPriorityDict = {
+        0: "low priority",
+        1: "medium priority",
+        2: "high priority"
+    };
     const dbPath = "cs124-lab3";
     const [taskToAdd, setTaskToAdd] = useState(["New Task", 0, false]);
 
@@ -30,7 +34,7 @@ function Footer(props) {
             <input type="image"
                    className="addPriorityIcon"
                    src={priorityDict[taskToAdd[1]]}
-                   alt={"priority"}
+                   alt={ariaPriorityDict[taskToAdd[1]]}
                    onClick={(e ) => setTaskToAdd([taskToAdd[0], (taskToAdd[1]+1)%3, taskToAdd[2]])}></input>
             <button className={"addTaskButton"} type={"button"} onClick={(e) => {
                 props.onAddTask(taskToAdd, dbPath);
