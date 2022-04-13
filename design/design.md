@@ -1,6 +1,6 @@
-Link to Tabbing through To-Do List Video: https://youtu.be/xVTE79Zm9os
+Link to Tabbing through To-Do List Video: https://youtu.be/ChnGUsRNWlU
 <br>
-Link to Screen Reader with To-Do List Video: https://youtu.be/56Y6Ai1Q_48
+Link to Screen Reader with To-Do List Video: https://youtu.be/kQzzEaHAQ6w
 
 ### 1. Design Decisions & Rationale
 ---
