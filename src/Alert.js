@@ -6,10 +6,13 @@ function Alert(props) {
             <div className="modal">
                 {props.children}
                 <div className="alert-buttons">
+                    <div  id="first">
                     <button className={"alert-button alert-cancel"} type={"button"}
                             onClick={(e) => props.onClose("", false)}>
                         Cancel
                     </button>
+                    </div>
+                    <div id="second">
                     <button className={"alert-button alert-ok"} type={"button"}
                             onClick={(e) => {
                                 props.onClose("", false);
@@ -17,6 +20,7 @@ function Alert(props) {
                             }}>
                         OK
                     </button>
+                    </div>
                 </div>
             </div>
         </div>
