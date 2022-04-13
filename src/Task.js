@@ -63,7 +63,7 @@ function Task(props) {
                                        props.onAddTask(taskToAdd, dbPath.concat("/subtaskCollection"));
                                        setTaskToAdd(["New Task", taskToAdd[1], false]);
                             }}></input>
-                            <input className={"addTask"}
+                            <input className={"addSubtask"}
                                    onClick={(e) =>
                                        taskToAdd[0] === "New Task" && setTaskToAdd(["", taskToAdd[1], taskToAdd[2]])}
                                    onChange={(e) => setTaskToAdd([e.target.value, taskToAdd[1], taskToAdd[2]])}
