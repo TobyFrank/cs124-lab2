@@ -1,3 +1,7 @@
+Link to Tabbing through To-Do List Video: https://youtu.be/ChnGUsRNWlU
+<br>
+Link to Screen Reader with To-Do List Video: https://youtu.be/kQzzEaHAQ6w
+
 ### 1. Design Decisions & Rationale
 ---
 
@@ -14,7 +18,16 @@ For the second lab, we kept the fundamental ideas the same from our first lab. M
 
 Third Lab:
 
-For the third lab, we only had a small amount of changes. We improved the user experience of editing tasks from errors that popped up when switching to Firestore. For instance, we kept the experience of tasks moving (to their respective filter order) after a user finishes editing a task description, instead of the task moving while a user edits the task description (for example, if the filter is for alphabetical order the task should not move until a user is finished editing the task description). Furthermore, we added a filter button with a dropdown module on the top right corner where it's most accessible, and a priority flag button next to the create task and task description. In this way, users can change the filtering of tasks (from ascending to descending) and also change the priority level of a task by clicking the flag, which opens a dropdown where they can select from a yellow (low priority), orange (medium priority), or red flag (high priority). Furthermore, we changed the language of the default page (when a user has no tasks) to make more clear what the user should be doing (create a new task). We also increased padding between icon options for tasks because one of the feedbacks we received was that the icons were too close and that users may be afraid of tapping the wrong thing. Some small design details we implemented this lab include showing the selected flag with a light grey background when clicking a flag dropdown, allowing users to click enter in order to add a task or complete an action, and cohesively making it so that clicking off of a pop up would cancel the selection of any action. Furthermore, a small detail we implemented was making it so that the priority flag looked as though it were a part of the add task bar so that users could choose a priority level for the task before adding it.
+For the third lab, we only had a small amount of changes. We improved the user experience of editing tasks from errors that popped up when switching to Firestore. For instance, we kept the experience of tasks moving (to their respective filter order) after a user finishes editing a task description, instead of the task moving while a user edits the task description (for example, if the filter is for alphabetical order the task should not move until a user is finished editing the task description). Furthermore, we added a filter button with a dropdown module on the top right corner where it's most accessible, and a priority flag button next to the create task and task description. In this way, users can change the filtering of tasks (from ascending to descending) and also change the priority level of a task by clicking the flag, which opens a dropdown where they can select from a yellow (low priority), orange (medium priority), or red flag (high priority). Furthermore, we changed the language of the default page (when a user has no tasks) to make more clear what the user should be doing (create a new task). We also increased padding between icon options for tasks because one of the feedbacks we received was that the icons were too close and that users may be afraid of tapping the wrong thing. Some small design details we implemented this lab include showing the selected flag with a light grey background when clicking a flag dropdown, allowing users to click enter in order to add a task or complete an action, and cohesively making it so that clicking off of a pop up would cancel the selection of any action. Furthermore, a small detail we implemented was making it so that the priority flag looked as though it were a part of the add task bar so that users could choose a priority level for the task before adding it. Overall, the design remains consistent and we added a ton of accessibility features such as labelling all of the buttons and focusable items so that their functions were more clear when using tabs or voice-over to navigate. We also made sure that when tabbing or using voice-over, if a pop-up module occured the tabbing ability would be limited to the pop-up.
+<br>
+
+Fourth Lab:
+
+For the fourth lab, we had to implement a number of changes for the addition of subtasks. Some major changes include that after adding a task via the Add New Task bar at the bottom of the page, you add a task that has a "expand" button. Once you click that "expand" button you have the option to add a new subtask under this task. We indented these subtasks so it'd be easier to tell they were subtasks within a task. We also made it so that the priority flags were no longer dropdowns, based on a user interview. They noted that with a dropdown you'd always need two clicks, one click to open the dropdown and a second click to select a priority flag level. However, by just clicking through priority tasks at minimum you'd need one click to change from a low priority flag to a medium priority flag one, and two clicks to change from a low priority flag to a high priority flag at maximum. We also chose to only have one dropdown show at a time, meaning that when you open one the previously open one will close for simplicity (we don't want a user to have 5 task lists open at once).
+<br>
+Furthermore, we made a ton of changes for accessibility. We made sure that all elements that were interactable could be tabbed through (including our filter dropdown menu), and that all the relevant objects were reachable in a nice way for screen readers. We renamed many of our elements to improve our descriptions and to make sure visually impaired (VI) or blind users could understand what tasks they were on contextually, and what tools they were using for which task (for instance, if you're on an edit button it will also tell you for what task you're editing). Plus we made it so that when you delete a task and the pop-up shows up that a user can only tab or use the screen-reader within the pop-up to click "Cancel" or "OK" (with additional context for screen readers).
+
+![To Do List Lab 4 Draft Image](To-Do-List-Lab4.jpg "To Do List Lab 4 Draft")
 <br>
 
 
@@ -34,6 +47,11 @@ Third Lab:
 
 We did not change much from our second lab. We essentially followed our original design idea, which was to have dropdowns for filtering and for flag priority selection. For prototyping purposes, we originally did not have a dropdown and just had three flags populate inline that users could choose from, but this would move our task text in an odd way and was less intuitive according to users when we conducted preliminary user testing.
 
+Fourth Lab:
+
+The main design alternative was keeping the flag dropdown bar. However, we decided to go with clicks to change flag priority, which is a cleaner design with less clicks after conducting user testing.
+
+
 <br><br>
 ### 3. User Testing
 
@@ -48,6 +66,10 @@ We conducted user testing again, and again had extremely valuable feedback. We c
 Third Lab:
 
 We conducted even more user testing than usual this time around because of how useful it is. Our friends were really impressed by the intuitiveness of the application and the overall look (especially since they had either taken this class previously or tested an earlier version of our application). Some things they noticed were that they could click enter to complte actions and that they could click off modules in order to cancel actions. Some of the suggestions they had which we implemented incluced added an option for the filter to be ascending or descending, making clicking off the drop-downs a way to close them, and making editing tasks more intuitive by also implementing click off features. We also changed the filter icon that was more intuitive to them by having them pick between two icon options.
+
+Fourth Lab:
+
+Our users were incredible. They questioned every design choice (like the aforementioned priority flags) and walking through the logic behind subtasks: how they're ordered, what happens when they're crossed, and when they should appear in the completed tag to name a few. Overall they were really impressed (again) to see how far we've come since Lab 1.
 
 
 <br><br>
@@ -65,6 +87,10 @@ Third Lab:
 
 Per usual, we faced many challenges. We were extremely confused by the initial Firestore implementation since the lab instructions had not specified downloading the Cloud Firestore API (which helped us debug), and so we had to guess on some parts or figure out parts on our own. In addition, we had accidentally changed a variable name earlier on (changed from "name" to "text" to more accurately describe the variable) but had forgotten, which caused us a million issues of having to ensure we changed all variables and not catching it earlier since we had forgotten. Furthermore, we had trouble with editing parents and children for CSS purposes, and figuring out how to make things look the way we wanted to overall. We found ourselves having to go back to CSS documentation to figure out how to make things work. For instance, we had trouble making our dropdown box overlay our tabs, even though we had a higher z-index for the dropdown such that the layer should be above it.
 
+Fourth Lab:
+
+There were many features we wanted to implemented that we simply could not due to technical issues where we'd have to do a major overhaul of our code. For instance, we were so close to showing number of uncompleted subtasks over number of all subtasks for a task list. This was a user testing request and it was a challenge to the point that it was more important to ensure accessibility was working over cool features. Furthermore we had to restructure many flex and gridboxes due to the new sublists. Finally, we struggled with accessibility and correctly tabbing. Specifically, we had to ensure that our labels provided enough context to VI and blind users for them to know what tools they were using for what task (this was very important to us) and that navigating with tabs was intuitive.
+
 <br><br>
 ### 4. Parts of the design you're most proud of
 
@@ -79,3 +105,7 @@ The proudest part of our design is probably our pop up module. We pride ourselve
 Third Lab:
 
 The part of the lab we're most proud of is our filter. Getting the dropdown in the correct placement, making the hover slightly gray, providing an ascending and descending option for users are all little bonuses in our book.
+
+Fourth Lab:
+
+The part of the lab we're most proud of is our accessibility labelling. We saw that our priority flags weren't labelled (which meant that users couldn't tell what priority flag they had and if it was low/med/high), and that check buttons, editing buttons, delete buttons, were labelled but didn't tell a user which task they were applying these changes to. We think this was a nuanced issue of not providing context and we're glad we made sure we addressed it.
