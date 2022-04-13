@@ -1,7 +1,6 @@
 import "./TaskList.css";
 
 import Task from "./Task.js";
-import { doc, getDoc } from "firebase/firestore";
 
 function TaskList(props) {
     return (

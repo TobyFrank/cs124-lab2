@@ -44,7 +44,6 @@ function Subtask(props) {
                    aria-label={"priority icon for ".concat(taskData.text, " with ", ariaPriorityDict[taskData.priority])}
                    onClick={(e) => props.onEditTask(taskData.id, "priority", (taskData.priority+1)%3, dbPath)}></input>
             <input type="image" className="editIcon"
-                   aria-label="edit task"
                    src={editIcon}
                    alt="edit"
                    aria-label={"edit icon for ".concat(taskData.text)}
@@ -53,7 +52,6 @@ function Subtask(props) {
                        setTimeout(() => document.getElementById(taskData.id).focus(), 10);
                    }}></input>
             <input type="image" className="deleteIcon"
-                   aria-label="delete task"
                    src={deleteIcon}
                    alt="delete"
                    aria-label={"delete icon for ".concat(taskData.text)}
