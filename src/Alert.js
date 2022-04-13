@@ -7,13 +7,16 @@ function Alert(props) {
                 {props.children}
                 <div className="alert-buttons">
                     <div  id="first">
-                    <button className={"alert-button alert-cancel"} type={"button"}
+                    <button tabIndex={0}
+                            className={"alert-button alert-cancel"}
+                            type={"button"}
                             onClick={(e) => props.onClose("", false)}>
                         Cancel
                     </button>
                     </div>
                     <div id="second">
-                    <button className={"alert-button alert-ok"} type={"button"}
+                    <button tabIndex={0}
+                            className={"alert-button alert-ok"} type={"button"}
                             onClick={(e) => {
                                 props.onClose("", false);
                                 props.onOK(props.taskToDeleteParams[0], props.taskToDeleteParams[1]);
