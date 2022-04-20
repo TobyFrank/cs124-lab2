@@ -15,7 +15,7 @@ function Footer(props) {
         1: "medium priority",
         2: "high priority"
     };
-    const dbPath = "cs124-lab3";
+    const dbPath = "cs124-lab5";
     const [taskToAdd, setTaskToAdd] = useState(["New Task", 0, false]);
 
     return (

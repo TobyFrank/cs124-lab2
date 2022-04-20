@@ -24,7 +24,7 @@ function Task(props) {
         2: "high priority"
     };
     const taskData = props.taskData;
-    const dbPath = "cs124-lab3".concat("/", taskData.id);
+    const dbPath = "cs124-lab5".concat("/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     const [taskToAdd, setTaskToAdd] = useState(["New Task", 0, false]);
 
