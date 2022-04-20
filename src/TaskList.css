@@ -4,7 +4,7 @@
     padding: 0.5vh 2vw;
 }
 
-button.deleteCompleted{
+button.deleteCompleted {
     font-family: Futura, sans-serif;
     background-color: #FFD365;
     width: 80%;
@@ -15,4 +15,10 @@ button.deleteCompleted{
     border-radius: 20px 20px 20px 20px;
     margin: 3vh auto;
     display:block;
+}
+
+@media screen and (max-width: 75em) {
+    button.deleteCompleted {
+        height: 7vh;
+    }
 }

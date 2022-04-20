@@ -13,6 +13,21 @@
     display: inline;
 }
 
+@media screen and (max-width: 1600px) {
+    .headerText {
+        font-size: 48px;
+        margin: 1vw;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .headerText {
+        font-size: 36px;
+        margin: 1vw;
+    }
+}
+
+
 .filterIcon {
     width: 25px;
 }
@@ -41,10 +56,14 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.paramDropdown span {
+.paramDropdown button {
     color: black;
-    padding: 12px 16px;
+    padding: 10px 14px;
     display: block;
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
 }
 
 .paramDropdown .currentParam {background-color: #e8e8e8}

@@ -10,29 +10,31 @@ function TaskList(props) {
                 <div>
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
                                                                                       taskData={task}
+                                                                                      subtaskList={props.subtaskList}
+                                                                                      subtaskId={props.subtaskId}
                                                                                       isChecked={task.completed}
-                                                                                      showPriorityDropdown={props.showPriorityDropdown}
-                                                                                      onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                       editingTaskId={props.editingTaskId}
                                                                                       editingTaskText={props.editingTaskText}
                                                                                       onEditTask={props.onEditTask}
-                                                                                      onCompletedTask={props.onCompletedTask}
                                                                                       onDeleteTask={props.onDeleteTask}
-                                                                                      toggleModal={props.toggleModal}/>)
+                                                                                      toggleModal={props.toggleModal}
+                                                                                      onExpandTaskList={props.onExpandTaskList}
+                                                                                      onAddTask={props.onAddTask}/>)
                     }
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
                                                                                      taskData={task}
+                                                                                     subtaskList={props.subtaskList}
+                                                                                     subtaskId={props.subtaskId}
                                                                                      isChecked={task.completed}
-                                                                                     showPriorityDropdown={props.showPriorityDropdown}
-                                                                                     onPriorityDropdownToggle={props.onPriorityDropdownToggle}
                                                                                      editingTaskId={props.editingTaskId}
                                                                                      editingTaskText={props.editingTaskText}
                                                                                      onEditTask={props.onEditTask}
-                                                                                     onCompletedTask={props.onCompletedTask}
                                                                                      onDeleteTask={props.onDeleteTask}
-                                                                                     toggleModal={props.toggleModal}/>)
+                                                                                     toggleModal={props.toggleModal}
+                                                                                     onExpandTaskList={props.onExpandTaskList}
+                                                                                     onAddTask={props.onAddTask}/>)
                     }
-                    {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Delete All Completed Tasks</button>}
+                    {props.showDeleteButton && <button className={"deleteCompleted"} type={"button"} onClick={(e) => props.toggleModal("", true)}>Clear Completed Tasks</button>}
                 </div>}
         </div>
     )
