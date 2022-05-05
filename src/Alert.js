@@ -2,10 +2,10 @@ import "./Alert.css";
 import {useEffect} from "react";
 
 function Alert(props) {
-    let textInput = null;
-    useEffect(()=> {
-        textInput.focus();
-    });
+    // let textInput = null;
+    // useEffect(()=> {
+    //     textInput.focus();
+    // });
     return (
         <div className={"backdrop"} onClick={(e) => props.onClose("", false)}>
             <div className="modal" aria-modal="true">
@@ -15,19 +15,19 @@ function Alert(props) {
                     <button tabIndex={0}
                             className={"alert-button alert-cancel"}
                             type={"button"}
-                            aria-label={"cancel button for ".concat( (props.taskToDeleteParams[1] ? "delete all completed tasks" : "delete task"))}
-                            onClick={(e) => props.onClose("", false)}
-                            ref={(button) => { textInput = button; }}>
+                            aria-label={"cancel button for ".concat( (props.taskParams[1] ? "delete all completed tasks" : "delete task"))}
+                            onClick={(e) => props.onClose("", false)}>
+                            {/*ref={(button) => { textInput = button; }}*/}
                         Cancel
                     </button>
                     </div>
                     <div id="second">
                     <button tabIndex={0}
                             className={"alert-button alert-ok"} type={"button"}
-                            aria-label={"OK button for ".concat( (props.taskToDeleteParams[1] ? "delete all completed tasks" : "delete task"))}
+                            aria-label={"OK button for ".concat( (props.taskParams[1] ? "delete all completed tasks" : "delete task"))}
                             onClick={(e) => {
                                 props.onClose("", false);
-                                props.onOK(props.taskToDeleteParams[0], props.taskToDeleteParams[1]);
+                                props.onOK(props.taskParams[0], props.taskParams[1]);
                             }}>
                         OK
                     </button>

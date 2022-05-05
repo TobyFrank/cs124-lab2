@@ -9,6 +9,7 @@ function TaskList(props) {
                 <div>{props.emptyMessage}</div> :
                 <div>
                     {props.taskList.filter(task => !task.completed).map(task => <Task key={task.id}
+                                                                                      user={props.user}
                                                                                       taskData={task}
                                                                                       subtaskList={props.subtaskList}
                                                                                       subtaskId={props.subtaskId}
@@ -18,10 +19,12 @@ function TaskList(props) {
                                                                                       onEditTask={props.onEditTask}
                                                                                       onDeleteTask={props.onDeleteTask}
                                                                                       toggleModal={props.toggleModal}
+                                                                                      toggleSharing={props.toggleSharing}
                                                                                       onExpandTaskList={props.onExpandTaskList}
                                                                                       onAddTask={props.onAddTask}/>)
                     }
                     {props.taskList.filter(task => task.completed).map(task => <Task key={task.id}
+                                                                                     user={props.user}
                                                                                      taskData={task}
                                                                                      subtaskList={props.subtaskList}
                                                                                      subtaskId={props.subtaskId}
@@ -31,6 +34,7 @@ function TaskList(props) {
                                                                                      onEditTask={props.onEditTask}
                                                                                      onDeleteTask={props.onDeleteTask}
                                                                                      toggleModal={props.toggleModal}
+                                                                                     toggleSharing={props.toggleSharing}
                                                                                      onExpandTaskList={props.onExpandTaskList}
                                                                                      onAddTask={props.onAddTask}/>)
                     }

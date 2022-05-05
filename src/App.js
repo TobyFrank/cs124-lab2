@@ -9,9 +9,10 @@ import Footer from "./Footer.js";
 import Alert from "./Alert.js";
 import Tasks from "./Tasks.js";
 import googlelogo from "./colorgooglelogo.png";
+import loginLogo from "./icon.ico";
 
 import { initializeApp } from "firebase/app";
-import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy, where } from "firebase/firestore";
+import { arrayUnion, collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy, where } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
     getAuth,
@@ -51,26 +52,20 @@ function App(props) {
         setIfSignIn(value);
     }
     if (loading) {
-        return <div>Loading...</div>
+        return <div className={"loadingScreen"}>Loading...</div>
     } else if (user) {
         if (!(user.emailVerified)) {
-            return <>
-                <VerifyEmail verifyEmail={verifyEmail} toggleSignIn={toggleSignIn} auth={auth}></VerifyEmail>
-            </>
+            return <VerifyEmail verifyEmail={verifyEmail} toggleSignIn={toggleSignIn} auth={auth} />
         } else {
-            return (<div>
-                Email:{user.email}
-                <SignedInApp {...props} user={user}/>
-                <button type="button" onClick={() => signOut(auth)}>Sign out</button>
-            </div>)
+            return <SignedInApp {...props} user={user}/>
         }
     } else {
         return <>
-            {error && <p>Error App: {error.message}</p>}
             {ifSignIn ?
                 <SignIn key="Sign In" toggleSignIn={toggleSignIn}/> :
                 <SignUp key="Sign Up" toggleSignIn={toggleSignIn}/>
             }
+            {error && <p>Authentication error: {error.message}</p>}
         </>
     }
 }
@@ -81,18 +76,21 @@ function VerifyEmail(props) {
         return <>
             <div className={"SignInSection"}>
                 Please check your email to verify your account!
-
+                <p className={"ToggleSignIn"} onClick={() => {
+                    signOut(props.auth);
+                    props.toggleSignIn(true);
+                }}>
+                    Return to login
+                </p>
             </div>
-            <p className={"ToggleSignIn"} onClick={() => {
-                signOut(props.auth);
-                props.toggleSignIn(true);
-            }}>
-                Return to login
-            </p>
+
         </>
     } else {
         return <div className={"SignInSection"}>
-            <button type="button" onClick={() => {
+            <p>
+                Verify your email below
+            </p>
+            <button className={"verifyEmail"} type="button" onClick={() => {
                 props.verifyEmail();
                 setVerifyEmailSent(true);
             }}>Verify email
@@ -123,12 +121,11 @@ function SignIn(props) {
         // we are signed in.
         return <div>Unexpectedly signed in already</div>
     } else if (loading1 || loading2) {
-        return <p>Logging in…</p>
+        return <div className={"loadingScreen"}>Logging in…</div>
     }
     return <div className={"SignInSection"}>
-        {error1 && <p>"Error logging in: " {error1.message}</p>}
-        {error2 && <p>"Error logging in: " {error2.message}</p>}
-        <label htmlFor='email'>Email: </label>
+        <img className={"loginLogo"} src={loginLogo} alt={"login logo"} />
+        <label htmlFor='email'>Email:</label>
         <input type="text" className={"emailAndPw"} id='email' value={email}
                onChange={e=>setEmail(e.target.value)}/>
         <br/>
@@ -139,7 +136,6 @@ function SignIn(props) {
         <button className={"SignInButton"} onClick={() =>signInWithEmailAndPassword(email, pw)}>
             Sign In
         </button>
-
         <hr/>
         <button className={"SignInGoogleButton"} onClick={() => signInWithGoogle()}>
             <img src={googlelogo} alt="Google Logo" width="24" height="24" />
@@ -148,6 +144,8 @@ function SignIn(props) {
         <p className={"ToggleSignIn"} onClick={() => props.toggleSignIn(false)}>
             Don't have an account? Create an account
         </p>
+        {error1 && <p>Error logging in: {error1.message}</p>}
+        {error2 && <p>Error logging in: {error2.message}</p>}
     </div>
 }
 
@@ -164,10 +162,9 @@ function SignUp(props) {
         // we are signed in.
         return <div>Unexpectedly signed in already</div>
     } else if (loading) {
-        return <p>Signing up…</p>
+        return <div className={"loadingScreen"}>Signing up…</div>
     }
     return <div className={"SignUpSection"}>
-        {error && <p>"Error signing up: " {error.message}</p>}
         <label htmlFor='email'>Enter Email: </label>
         <input type="text" className={"emailAndPw"} id='email' value={email}
                onChange={e => setEmail(e.target.value)}/>
@@ -183,6 +180,7 @@ function SignUp(props) {
         <p className={"ToggleSignIn"} onClick={() => props.toggleSignIn(true)}>
             Already have an account? Sign up
         </p>
+        {error && <p>Error signing up: {error.message}</p>}
     </div>
 }
 
@@ -190,9 +188,11 @@ function SignedInApp(props) {
     //  orderBy("priority", "desc")
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
+    const [sharingAlert, setSharingAlert] = useState(false);
     const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [tabIndex, setTabIndex] = useState(1);
     const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
+    const [sharingParams, setSharingParams] = useState(["", ""]);
 
     const [sortDirection, setSortDirection] = useState("asc");
     const [sortParam, setSortParam] = useState("created");
@@ -216,11 +216,18 @@ function SignedInApp(props) {
     }
 
     function handleEditTask(taskId, field, value, dbPath) {
-        setDoc(doc(db, dbPath),
-            {[field]: value},
-            {merge: true});
-        if (field === "text") {
-            handleEditingTaskIdChange(taskId);
+        if (field === "shared") {
+            setDoc(doc(db, dbPath),
+                {[field]: arrayUnion(value)},
+                {merge: true});
+            setSharingParams(["", ""]);
+        } else {
+            setDoc(doc(db, dbPath),
+                {[field]: value},
+                {merge: true});
+            if (field === "text") {
+                handleEditingTaskIdChange(taskId);
+            }
         }
     }
 
@@ -255,6 +262,12 @@ function SignedInApp(props) {
         }
     }
 
+    function handleShareTask() {
+        const value = sharingParams[0];
+        const dbPath = sharingParams[1];
+        handleEditTask("", "shared", value, dbPath);
+    }
+
     function toggleSortDirection() {
         if (sortDirection === "asc") {
             setSortDirection("desc");
@@ -275,23 +288,35 @@ function SignedInApp(props) {
         setTaskToDeleteParams([taskId, ifDeleteAll]);
         setShowAlert(!showAlert);
     }
+
+    function toggleSharingModal(dbPath) {
+        setSharingParams([sharingParams[0], dbPath])
+        setSharingAlert(!sharingAlert);
+    }
+
     if (loadingTask || loadingSubtask) {
-        return <div className={"loading"}>Loading Task List...</div>
+        return <div className={"loadingScreen"}>Loading Task List...</div>
     } else if (errorTask) {
-        return <div>
-            <div>There has been an error in loading a task: {JSON.stringify(errorTask)}</div>
+        return <div className={"SignInSection"}>
+            <div className={"errorScreen"}>There has been an error in loading a task: {JSON.stringify(errorTask)}</div>
             <div>Auth: {props.user.uid}, {props.user.email}</div>
+            <button className={"signOut"} type="button" onClick={() => signOut(auth)}>Sign out</button>
         </div>
     } else if (errorSubtask) {
         return <div>
-            <div>There has been an error in loading a subtask: {JSON.stringify(errorSubtask)}</div>
+            <div className={"errorScreen"}>There has been an error in loading a subtask: {JSON.stringify(errorSubtask)}</div>
             <div>Auth: {props.user.uid}, {props.user.email}</div>
         </div>
     } else {
         return (
-            <div className={"app"} onClick={(e) => toggleShowSortDropdown(false)}>
+            <div className={"app"} onClick={() => toggleShowSortDropdown(false)}>
+                <div className={"userInfo"}>
+                    <span className={"userEmail"}>Email: {props.user.email}</span>
+                    <button className={"signOut"} type="button" onClick={() => signOut(auth)}>Sign out</button>
+                </div>
                 <div className={"header"}>
                     <Header sortParam={sortParam}
+                            user={props.user}
                             onSortParamChange={handleChangeSortParam}
                             showSortDropdown={showSortDropdown}
                             onSortDropdownToggle={toggleShowSortDropdown}
@@ -299,15 +324,22 @@ function SignedInApp(props) {
                             onSortDirectionToggle={toggleSortDirection}>
                     </Header>
                 </div>
-                {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskToDeleteParams={taskToDeleteParams}>
+                {showAlert && <Alert onClose={toggleModal} onOK={handleDeleteTask} taskParams={taskToDeleteParams}>
                     <div>
                         {taskToDeleteParams[1] ?
                             "Are you sure you want to delete all completed tasks?" :
                             "Are you sure you want to delete this task?"}
                     </div>
                 </Alert>}
+                {sharingAlert && <Alert onClose={toggleSharingModal} onOK={handleShareTask} taskParams={sharingParams}>
+                    <label htmlFor='email'>Enter Email: </label>
+                    <input type="text" className={"emailAndPw"} id='email' value={sharingParams[0]}
+                           onClick={e => e.stopPropagation()}
+                           onChange={e => setSharingParams([e.target.value, sharingParams[1]])}/>
+                </Alert>}
                 <div className={"tasks"}>
-                    <Tasks taskList={taskList}
+                    <Tasks user={props.user}
+                           taskList={taskList}
                            subtaskList={subtaskList}
                            subtaskId={subtaskId}
                            editingTaskId={editingTaskId}
@@ -316,13 +348,14 @@ function SignedInApp(props) {
                            onEditTask={handleEditTask}
                            onDeleteTask={handleDeleteTask}
                            toggleModal={toggleModal}
+                           toggleSharing={toggleSharingModal}
                            showAlert={showAlert}
                            onExpandTaskList={handleSubtaskChange}
-                           onAddTask={handleAddTask}></Tasks>
+                           onAddTask={handleAddTask} />
                 </div>
                 {tabIndex !== 2 &&
                     <div className="footer">
-                        <Footer onAddTask={handleAddTask}></Footer>
+                        <Footer onAddTask={handleAddTask} />
                     </div>
                 }
             </div>

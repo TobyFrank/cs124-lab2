@@ -1,8 +1,43 @@
-body {
+html, body {
     font-family: Futura, sans-serif;
     margin: 0px;
     padding: 0px;
     font-size: 11pt;
+    min-height: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+body{
+    height:100vh;
+}
+
+.userInfo {
+    top: 0;
+    padding: 1vh 2vw 0px 0px;
+    z-index: 101;
+    background-color: #65C18C;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2vw;
+    font-family: Futura, sans-serif;
+
+}
+
+button.signOut {
+    font-family: Futura, sans-serif;
+    background-color: #FFD365;
+    font-size: 10pt;
+    color: #6b2f02;
+    border-style: none;
+    border-radius: 20px;
+    padding: 2px 10px 2px 10px;
+    display:block;
+}
+
+p.userEmail {
+    font-family: Futura, sans-serif;
+    font-size: 10pt;
 }
 
 .app {
@@ -24,13 +59,22 @@ body {
     z-index: 2;
 }
 
+.loginLogo {
+    /*height: 100%;*/
+    /*width: 100%;*/
+    max-width: 50px;
+    padding-bottom: 10vw;
+}
+
 .SignUpSection {
     font-size: 12pt;
     padding: 10vw;
     display: flex;
     background-color: #C1F4C5;
     flex-direction: column;
-    height: 100%;
+    margin: 0px;
+    min-height: 100%;
+    height: 100vh;
 }
 
 .SignInSection {
@@ -39,7 +83,10 @@ body {
     display: flex;
     background-color: #C1F4C5;
     flex-direction: column;
-    height: 100%;
+    align-content: start;
+    margin: 0px;
+    min-height: 100%;
+    height: 100vh;
 }
 
 button.SignInButton {
@@ -66,9 +113,22 @@ button.SignInGoogleButton {
     border-radius: 20px 20px 20px 20px;
     border-color: #4285f4;
     border-width: 2px;
-    /*margin: 3vh auto;*/
     display: flex;
+    align-items: center;
     justify-content: center;
+}
+
+button.verifyEmail {
+    font-family: Futura, sans-serif;
+    background-color: #65c18c;
+    width: 80%;
+    font-size: 12pt;
+    color: white;
+    height: 5vh;
+    border-style: none;
+    border-radius: 20px 20px 20px 20px;
+    /*margin: 3vh auto;*/
+    display: block;
 }
 
 button.SignUpButton {
@@ -89,7 +149,8 @@ button.SignUpButton {
     font-size: 10pt;
     color:#4285f4;
     height: 5vh;
-    margin: 3vh auto;
+    margin: 3vh 0vw;
+    z-index: 101;
 }
 
 input.emailAndPw {
@@ -102,6 +163,16 @@ input.emailAndPw {
     border-color: gray;
     margin-top: 5px;
     padding-left: 15px;
+}
+
+.loadingScreen {
+    background-color: #C1F4C5;
+    height: 100vh;
+}
+
+.errorScreen {
+    background-color: #C1F4C5;
+    height: 100vh;
 }
 
 /*.header {*/

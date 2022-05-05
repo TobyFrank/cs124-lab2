@@ -4,6 +4,7 @@ import highPriorityIcon from "./highPriority.png";
 import {useState} from "react";
 import editIcon from "./edit.png";
 import deleteIcon from "./delete.png";
+import deleteVoidIcon from "./voiddelete.png"
 
 function Subtask(props) {
     const priorityDict = {
@@ -19,6 +20,8 @@ function Subtask(props) {
     const taskData = props.taskData;
     const dbPath = "cs124-lab5".concat("/", props.subtaskId, "/subtaskCollection/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
+    const isOwner = (props.user.uid === taskData.owner);
+
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
             <input type="checkbox"
@@ -51,11 +54,14 @@ function Subtask(props) {
                        props.onEditTask(taskData.id, "text", editingTaskText, dbPath);
                        setTimeout(() => document.getElementById(taskData.id).focus(), 10);
                    }}></input>
-            <input type="image" className="deleteIcon"
+            {isOwner ?
+                <input type="image" className="deleteIcon"
                    src={deleteIcon}
                    alt="delete"
                    aria-label={"delete icon for ".concat(taskData.text)}
-                   onClick={(e) => props.toggleModal(dbPath, false)}></input>
+                   onClick={(e) => props.toggleModal(dbPath, false)}>
+                </input> :
+                <img className="deleteIcon" src={deleteVoidIcon}/>}
         </div>
     )
 
