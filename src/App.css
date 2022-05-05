@@ -24,6 +24,86 @@ body {
     z-index: 2;
 }
 
+.SignUpSection {
+    font-size: 12pt;
+    padding: 10vw;
+    display: flex;
+    background-color: #C1F4C5;
+    flex-direction: column;
+    height: 100%;
+}
+
+.SignInSection {
+    font-size: 12pt;
+    padding: 10vw;
+    display: flex;
+    background-color: #C1F4C5;
+    flex-direction: column;
+    height: 100%;
+}
+
+button.SignInButton {
+    font-family: Futura, sans-serif;
+    background-color: #65c18c;
+    width: 80%;
+    font-size: 12pt;
+    color: white;
+    height: 5vh;
+    border-style: none;
+    border-radius: 20px 20px 20px 20px;
+    /*margin: 3vh auto;*/
+    display: block;
+}
+
+button.SignInGoogleButton {
+    font-family: Futura, sans-serif;
+    background:#4285f4;
+    width: 80%;
+    font-size: 12pt;
+    color:white;
+    height: 5vh;
+    border-style: solid;
+    border-radius: 20px 20px 20px 20px;
+    border-color: #4285f4;
+    border-width: 2px;
+    /*margin: 3vh auto;*/
+    display: flex;
+    justify-content: center;
+}
+
+button.SignUpButton {
+    font-family: Futura, sans-serif;
+    background-color: #65c18c;
+    width: 80%;
+    font-size: 12pt;
+    color: white;
+    height: 5vh;
+    border-style: none;
+    border-radius: 20px 20px 20px 20px;
+    /*margin: 3vh auto;*/
+    display: block;
+}
+
+.ToggleSignIn {
+    font-family: Futura, sans-serif;
+    font-size: 10pt;
+    color:#4285f4;
+    height: 5vh;
+    margin: 3vh auto;
+}
+
+input.emailAndPw {
+    font-family: Futura, sans-serif;
+    width: auto;
+    height: 5vh;
+    border: solid;
+    border-width: 1px;
+    border-radius: 20px 20px 20px 20px;
+    border-color: gray;
+    margin-top: 5px;
+    padding-left: 15px;
+}
+
 /*.header {*/
 /*    position: sticky;*/
 /*    background-color: #65C18C;*/

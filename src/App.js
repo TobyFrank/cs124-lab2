@@ -8,6 +8,7 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Alert from "./Alert.js";
 import Tasks from "./Tasks.js";
+import googlelogo from "./colorgooglelogo.png";
 
 import { initializeApp } from "firebase/app";
 import { collection, deleteDoc, doc, getFirestore, query, serverTimestamp, setDoc, orderBy, where } from "firebase/firestore";
@@ -40,32 +41,73 @@ const collectionName = "cs124-lab5";
 
 function App(props) {
     const [user, loading, error] = useAuthState(auth);
+    const [ifSignIn, setIfSignIn] = useState(true);
 
     function verifyEmail() {
         sendEmailVerification(user);
     }
 
+    function toggleSignIn(value) {
+        setIfSignIn(value);
+    }
     if (loading) {
         return <div>Loading...</div>
     } else if (user) {
-        return (<div>
-            {user.displayName}{user.email}
-            <SignedInApp {...props} user={user}/>
-            <button type="button" onClick={() => signOut(auth)}>Sign out</button>
-            {!user.emailVerified && <button type="button" onClick={verifyEmail}>Verify email</button>}
-        </div>)
+        if (!(user.emailVerified)) {
+            return <>
+                <VerifyEmail verifyEmail={verifyEmail} toggleSignIn={toggleSignIn} auth={auth}></VerifyEmail>
+            </>
+        } else {
+            return (<div>
+                Email:{user.email}
+                <SignedInApp {...props} user={user}/>
+                <button type="button" onClick={() => signOut(auth)}>Sign out</button>
+            </div>)
+        }
     } else {
         return <>
             {error && <p>Error App: {error.message}</p>}
-            <div>
-                <SignIn key="Sign In"/>
-                <SignUp key="Sign Up"/>
-            </div>
+            {ifSignIn ?
+                <SignIn key="Sign In" toggleSignIn={toggleSignIn}/> :
+                <SignUp key="Sign Up" toggleSignIn={toggleSignIn}/>
+            }
         </>
     }
 }
 
-function SignIn() {
+function VerifyEmail(props) {
+    const [verifyEmailSent, setVerifyEmailSent] = useState(false);
+    if (verifyEmailSent) {
+        return <>
+            <div className={"SignInSection"}>
+                Please check your email to verify your account!
+
+            </div>
+            <p className={"ToggleSignIn"} onClick={() => {
+                signOut(props.auth);
+                props.toggleSignIn(true);
+            }}>
+                Return to login
+            </p>
+        </>
+    } else {
+        return <div className={"SignInSection"}>
+            <button type="button" onClick={() => {
+                props.verifyEmail();
+                setVerifyEmailSent(true);
+            }}>Verify email
+            </button>
+            <p className={"ToggleSignIn"} onClick={() => {
+                signOut(props.auth);
+                props.toggleSignIn(true);
+            }}>
+                Log in with a different account
+            </p>
+        </div>
+    }
+}
+
+function SignIn(props) {
     const [signInWithEmailAndPassword,
         user1, loading1, error1
     ] = useSignInWithEmailAndPassword(auth);
@@ -83,29 +125,33 @@ function SignIn() {
     } else if (loading1 || loading2) {
         return <p>Logging in…</p>
     }
-    return <div>
+    return <div className={"SignInSection"}>
         {error1 && <p>"Error logging in: " {error1.message}</p>}
         {error2 && <p>"Error logging in: " {error2.message}</p>}
-        <label htmlFor='email'>email: </label>
-        <input type="text" id='email' value={email}
+        <label htmlFor='email'>Email: </label>
+        <input type="text" className={"emailAndPw"} id='email' value={email}
                onChange={e=>setEmail(e.target.value)}/>
         <br/>
-        <label htmlFor='pw'>pw: </label>
-        <input type="text" id='pw' value={pw}
+        <label htmlFor='pw'>Password: </label>
+        <input type="text" className={"emailAndPw"} id='pw' value={pw}
                onChange={e=>setPw(e.target.value)}/>
         <br/>
-        <button onClick={() =>signInWithEmailAndPassword(email, pw)}>
-            Sign in with email/pw
+        <button className={"SignInButton"} onClick={() =>signInWithEmailAndPassword(email, pw)}>
+            Sign In
         </button>
 
         <hr/>
-        <button onClick={() => signInWithGoogle()}>
+        <button className={"SignInGoogleButton"} onClick={() => signInWithGoogle()}>
+            <img src={googlelogo} alt="Google Logo" width="24" height="24" />
             Sign in with Google
         </button>
+        <p className={"ToggleSignIn"} onClick={() => props.toggleSignIn(false)}>
+            Don't have an account? Create an account
+        </p>
     </div>
 }
 
-function SignUp() {
+function SignUp(props) {
     const [
         createUserWithEmailAndPassword,
         userCredential, loading, error
@@ -120,25 +166,28 @@ function SignUp() {
     } else if (loading) {
         return <p>Signing up…</p>
     }
-    return <div>
+    return <div className={"SignUpSection"}>
         {error && <p>"Error signing up: " {error.message}</p>}
-        <label htmlFor='email'>email: </label>
-        <input type="text" id='email' value={email}
+        <label htmlFor='email'>Enter Email: </label>
+        <input type="text" className={"emailAndPw"} id='email' value={email}
                onChange={e => setEmail(e.target.value)}/>
         <br/>
-        <label htmlFor='pw'>pw: </label>
-        <input type="text" id='pw' value={pw}
+        <label htmlFor='pw'>Set Password: </label>
+        <input type="text" className={"emailAndPw"} id='pw' value={pw}
                onChange={e => setPw(e.target.value)}/>
         <br/>
-        <button onClick={() =>
+        <button className={"SignUpButton"} onClick={() =>
             createUserWithEmailAndPassword(email, pw)}>
-            Create test user
+            Create an Account
         </button>
-
+        <p className={"ToggleSignIn"} onClick={() => props.toggleSignIn(true)}>
+            Already have an account? Sign up
+        </p>
     </div>
 }
 
 function SignedInApp(props) {
+    //  orderBy("priority", "desc")
     const [editingTaskId, setEditingTaskId] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [showSortDropdown, setShowSortDropdown] = useState(false);
@@ -146,22 +195,19 @@ function SignedInApp(props) {
     const [taskToDeleteParams, setTaskToDeleteParams] = useState(["", false]);
 
     const [sortDirection, setSortDirection] = useState("asc");
-    const [sortParam, setSortParam] = useState("text");
-    const q = query(collection(db, collectionName), orderBy(sortParam, sortDirection));
-    const [taskList, loadingTask] = useCollectionData(q);
+    const [sortParam, setSortParam] = useState("created");
+    const q = query(collection(db, collectionName), where("shared", "array-contains", props.user.email), orderBy(sortParam, sortDirection));
+    const [taskList, loadingTask, errorTask] = useCollectionData(q);
 
-    //,
-    //         where("shared", "array-contains", props.user.email)
-
-    const [qSubParams, setQSubParams] = useState([db, collectionName, "", ""]);
-    const qSub = query(collection(qSubParams[0], qSubParams[1], qSubParams[2], qSubParams[3]), orderBy("priority", "desc"));
+    const [qSubParams, setQSubParams] = useState(collection(db, collectionName, "", ""));
+    const qSub = query(qSubParams, orderBy("priority", "desc"));
     const [subtaskId, setSubtaskId] = useState("");
-    const [subtaskList, loadingSubtask] = useCollectionData(qSub);
+    const [subtaskList, loadingSubtask, errorSubtask] = useCollectionData(qSub);
 
     function handleSubtaskChange(taskId) {
-        const queryParam = [db, collectionName, taskId, "subtaskCollection"]
-        if (queryParam[2] === qSubParams[2]) {
-            setQSubParams([db, collectionName, "", ""]);
+        const queryParam = collection(db, collectionName, taskId, "subtaskCollection")
+        if (subtaskId === taskId) {
+            setQSubParams(collection(db, collectionName, "", ""));
             setSubtaskId("");
         } else {
             setQSubParams(queryParam);
@@ -186,13 +232,7 @@ function SignedInApp(props) {
         }
     }
 
-    // function handleSetCompletedTask(taskId, dbPath) {
-    //     setDoc(doc(db, dbPath),
-    //         {completed: !(taskList.find(task => task.id === taskId).completed)}, {merge: true});
-    // }
-
     function handleAddTask(taskInfo, dbPath) {
-        console.log("add");
         const [taskText, taskPriority] = taskInfo;
         const id = generateUniqueID();
         setDoc(doc(db, dbPath.concat("/", id)),
@@ -209,7 +249,6 @@ function SignedInApp(props) {
 
     function handleDeleteTask(dbPath, ifDeleteAll) {
         if (ifDeleteAll) {
-            console.log("delete all");
             taskList.forEach(p => {p.completed && deleteDoc(doc(db, collectionName, p.id))})
         } else {
             deleteDoc(doc(db, dbPath))
@@ -238,6 +277,16 @@ function SignedInApp(props) {
     }
     if (loadingTask || loadingSubtask) {
         return <div className={"loading"}>Loading Task List...</div>
+    } else if (errorTask) {
+        return <div>
+            <div>There has been an error in loading a task: {JSON.stringify(errorTask)}</div>
+            <div>Auth: {props.user.uid}, {props.user.email}</div>
+        </div>
+    } else if (errorSubtask) {
+        return <div>
+            <div>There has been an error in loading a subtask: {JSON.stringify(errorSubtask)}</div>
+            <div>Auth: {props.user.uid}, {props.user.email}</div>
+        </div>
     } else {
         return (
             <div className={"app"} onClick={(e) => toggleShowSortDropdown(false)}>

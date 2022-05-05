@@ -71,10 +71,7 @@ function Task(props) {
                            aria-label={"expand subtask list for ".concat(taskData.text)}
                            src={props.subtaskId === taskData.id ? minimizeIcon : expandIcon}
                            alt="delete"
-                           onClick={(e) => {
-                               props.onExpandTaskList(taskData.id);
-                               console.log(props.subtaskList);
-                           }}></input>
+                           onClick={(e) => {props.onExpandTaskList(taskData.id)}}></input>
                 </div>
                 <div className={"subtaskListFlex"}>
                     {props.subtaskId === taskData.id &&

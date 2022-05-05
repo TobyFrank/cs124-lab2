@@ -9,7 +9,7 @@
     border-width: 1px;
     border-radius: 5px;
     word-wrap: anywhere;
-    align-self: center;
+    /*align-self: center;*/
 }
 
 .listItem > * {

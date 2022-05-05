@@ -17,7 +17,7 @@ function Subtask(props) {
         2: "high priority"
     };
     const taskData = props.taskData;
-    const dbPath = "cs124-lab3".concat("/", props.subtaskId, "/subtaskCollection/", taskData.id);
+    const dbPath = "cs124-lab5".concat("/", props.subtaskId, "/subtaskCollection/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     return (
         <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
