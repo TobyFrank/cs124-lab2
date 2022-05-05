@@ -17,14 +17,14 @@
 @media screen and (max-width: 1600px) {
     .headerText {
         font-size: 48px;
-        margin: 1vw;
+        /*margin: 2vw;*/
     }
 }
 
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 400px) {
     .headerText {
         font-size: 36px;
-        margin: 1vw;
+        /*margin: 2vw;*/
     }
 }
 

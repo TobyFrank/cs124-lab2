@@ -311,7 +311,7 @@ function SignedInApp(props) {
         return (
             <div className={"app"} onClick={() => toggleShowSortDropdown(false)}>
                 <div className={"userInfo"}>
-                    <span className={"userEmail"}>Email: {props.user.email}</span>
+                    <span className={"userEmail"}>{props.user.email}</span>
                     <button className={"signOut"} type="button" onClick={() => signOut(auth)}>Sign out</button>
                 </div>
                 <div className={"header"}>

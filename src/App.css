@@ -168,6 +168,7 @@ input.emailAndPw {
 .loadingScreen {
     background-color: #C1F4C5;
     height: 100vh;
+    padding: 2vw;
 }
 
 .errorScreen {

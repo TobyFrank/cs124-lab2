@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedInAndVerified() {
+    	return request.auth.uid != null && request.auth.token.email_verified;
+    }
+
+    function isDocOwner() {
+    	return request.auth.uid == resource.data.owner;
+    }
+
+    function isSharedWithMe() {
+    	return request.auth.token.email in resource.data.shared;
+    }
+
+    function updatedDocSameOwner() {
+    	return resource.data.owner == request.resource.data.owner;
+    }
+
+    function updatedDocSameCreatedAndID() {
+    	return resource.data.id == request.resource.data.id &&
+      	resource.data.created == request.resource.data.created;
+    }
+
+    function updatedDocSameSharing() {
+    	return resource.data.shared == request.resource.data.shared;
+    }
+
+    function createdDocHasCorrectOwner() {
+      return request.auth.uid == request.resource.data.owner;
+    }
+
+    function validTaskUpdate() {
+    	return isSharedWithMe() && updatedDocSameOwner() && updatedDocSameSharing();
+    }
+
+    match /cs124-lab5/{document} {
+    	allow read: if signedInAndVerified() && isSharedWithMe();
+    	allow create: if signedInAndVerified() && createdDocHasCorrectOwner();
+    	allow update: if signedInAndVerified() && updatedDocSameCreatedAndID() && (isDocOwner() || validTaskUpdate());
+    	allow delete: if signedInAndVerified() && isDocOwner();
+      // allow read, write: if true;
+
+    }
+
+    match /cs124-lab5/{document}/{subtask=**} {
+
+      function mainTaskSharedWithMe() {
+        return request.auth.token.email in get(/databases/$(database)/documents/cs124-lab5/$(document)).data.shared;
+      }
+
+      function isMainTaskOwner() {
+        return request.auth.uid == get(/databases/$(database)/documents/cs124-lab5/$(document)).data.owner;
+      }
+
+      function validSubtaskUpdate() {
+      	return mainTaskSharedWithMe() && updatedDocSameOwner() && updatedDocSameSharing();
+      }
+
+      allow read: if signedInAndVerified();
+      allow create: if signedInAndVerified() && createdDocHasCorrectOwner() && mainTaskSharedWithMe();
+      allow update: if signedInAndVerified() && updatedDocSameCreatedAndID() && mainTaskSharedWithMe();
+      allow delete: if signedInAndVerified() && (isMainTaskOwner() || isDocOwner()); // Owner should be able to delete all tasks
+    }
+  }
+}
