@@ -1,5 +1,4 @@
 import "./Alert.css";
-import {useEffect} from "react";
 
 function Alert(props) {
     // let textInput = null;

@@ -61,7 +61,7 @@ function Subtask(props) {
                    aria-label={"delete icon for ".concat(taskData.text)}
                    onClick={(e) => props.toggleModal(dbPath, false)}>
                 </input> :
-                <img className="deleteIcon" src={deleteVoidIcon}/>}
+                <img className="deleteIcon" src={deleteVoidIcon} alt={"delete disallowed"}/>}
         </div>
     )
 

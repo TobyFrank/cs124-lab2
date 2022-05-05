@@ -66,7 +66,7 @@ function Task(props) {
                                props.toggleSharing(dbPath);
                                setTimeout(() => document.getElementById(taskData.id).focus(), 10);}}>
                         </input> :
-                        <img className="shareIcon" src={shareVoidIcon}/>}
+                        <img className="shareIcon" src={shareVoidIcon} alt={"share disallowed"}/>}
                     <input type="image" className="editIcon"
                            aria-label={"edit task for ".concat(taskData.text)}
                            src={editIcon}
@@ -82,7 +82,7 @@ function Task(props) {
                                alt="delete"
                                onClick={(e) => props.toggleModal(dbPath, false)}>
                         </input> :
-                        <img className="deleteIcon" src={deleteVoidIcon}/>}
+                        <img className="deleteIcon" src={deleteVoidIcon} alt={"share disallowed"}/>}
                     <input type="image" className="minimizeIcon"
                            aria-label={"expand subtask list for ".concat(taskData.text)}
                            src={props.subtaskId === taskData.id ? minimizeIcon : expandIcon}
