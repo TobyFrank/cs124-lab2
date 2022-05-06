@@ -14,6 +14,7 @@ function Tasks(props) {
 
             <TabPanel>
                 <TaskList key="Incomplete"
+                          user={props.user}
                           taskList={props.taskList.filter(task => !task.completed)}
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}
@@ -23,12 +24,14 @@ function Tasks(props) {
                           onEditTask={props.onEditTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
+                          toggleSharing={props.toggleSharing}
                           showDeleteButton={false}
                           onExpandTaskList={props.onExpandTaskList}
                           onAddTask={props.onAddTask}></TaskList>
             </TabPanel>
             <TabPanel>
                 <TaskList key="All"
+                          user={props.user}
                           taskList={props.taskList}
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}
@@ -38,12 +41,14 @@ function Tasks(props) {
                           onEditTask={props.onEditTask}
                           onDeleteTask={props.onDeleteTask}
                           toggleModal={props.toggleModal}
+                          toggleSharing={props.toggleSharing}
                           showDeleteButton={true}
                           onExpandTaskList={props.onExpandTaskList}
                           onAddTask={props.onAddTask}></TaskList>
             </TabPanel>
             <TabPanel>
                 <TaskList key="Complete"
+                          user={props.user}
                           taskList={props.taskList.filter(task => task.completed)}
                           subtaskList={props.subtaskList}
                           subtaskId={props.subtaskId}

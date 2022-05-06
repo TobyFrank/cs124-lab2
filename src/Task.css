@@ -9,7 +9,11 @@
     border-width: 1px;
     border-radius: 5px;
     word-wrap: anywhere;
-    align-self: center;
+    /*align-self: center;*/
+}
+
+.listItem.shared {
+    /*background-color: #d7cdc1;*/
 }
 
 .listItem > * {
@@ -74,6 +78,10 @@
     height: 20px;
     margin: 0 1vw;
     self-align: center;
+}
+
+.shareIcon {
+    height: 20px;
 }
 
 .minimizeIcon {

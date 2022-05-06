@@ -8,7 +8,9 @@ import highPriorityIcon from "./highPriority.png";
 import minimizeIcon from "./minimize.png";
 import expandIcon from "./expand.png";
 import addSubtaskIcon from "./AddButton.png";
-
+import shareIcon from "./share.png";
+import deleteVoidIcon from "./voiddelete.png";
+import shareVoidIcon from "./voidshare.png";
 
 import {useState} from "react";
 
@@ -27,9 +29,10 @@ function Task(props) {
     const dbPath = "cs124-lab5".concat("/", taskData.id);
     const [editingTaskText, setEditingTaskText] = useState(taskData.text);
     const [taskToAdd, setTaskToAdd] = useState(["New Task", 0, false]);
+    const isOwner = (props.user.uid === taskData.owner);
 
     return (
-        <div className="listItem" id={props.isChecked ? "completedTask" : "incompleteTask"}>
+        <div className={isOwner ? "listItem" : "listItem shared"} id={props.isChecked ? "completedTask" : "incompleteTask"}>
             <input type="checkbox"
                    className={"checkbox"}
                    checked={props.isChecked}
@@ -54,6 +57,16 @@ function Task(props) {
                            alt={ariaPriorityDict[taskData.priority]}
                            aria-label={"priority icon for ".concat(taskData.text, " with ", ariaPriorityDict[taskData.priority])}
                            onClick={(e) => props.onEditTask(taskData.id, "priority", (taskData.priority+1)%3, dbPath)}></input>
+                    {isOwner ?
+                        <input type="image" className="shareIcon"
+                           aria-label={"share task"}
+                           src={shareIcon}
+                           alt="share"
+                           onClick={(e) => {
+                               props.toggleSharing(dbPath);
+                               setTimeout(() => document.getElementById(taskData.id).focus(), 10);}}>
+                        </input> :
+                        <img className="shareIcon" src={shareVoidIcon} alt={"share disallowed"}/>}
                     <input type="image" className="editIcon"
                            aria-label={"edit task for ".concat(taskData.text)}
                            src={editIcon}
@@ -62,24 +75,25 @@ function Task(props) {
                                props.onEditTask(taskData.id, "text", editingTaskText, dbPath);
                                setTimeout(() => document.getElementById(taskData.id).focus(), 10);
                            }}></input>
-                    <input type="image" className="deleteIcon"
-                           aria-label={"delete task for ".concat(taskData.text)}
-                           src={deleteIcon}
-                           alt="delete"
-                           onClick={(e) => props.toggleModal(dbPath, false)}></input>
+                    {isOwner ?
+                        <input type="image" className="deleteIcon"
+                               aria-label={"delete task for ".concat(taskData.text)}
+                               src={deleteIcon}
+                               alt="delete"
+                               onClick={(e) => props.toggleModal(dbPath, false)}>
+                        </input> :
+                        <img className="deleteIcon" src={deleteVoidIcon} alt={"share disallowed"}/>}
                     <input type="image" className="minimizeIcon"
                            aria-label={"expand subtask list for ".concat(taskData.text)}
                            src={props.subtaskId === taskData.id ? minimizeIcon : expandIcon}
                            alt="delete"
-                           onClick={(e) => {
-                               props.onExpandTaskList(taskData.id);
-                               console.log(props.subtaskList);
-                           }}></input>
+                           onClick={(e) => {props.onExpandTaskList(taskData.id)}}></input>
                 </div>
                 <div className={"subtaskListFlex"}>
                     {props.subtaskId === taskData.id &&
                         <div>
                             {props.subtaskList.map(subtask => <Subtask key={subtask.id}
+                                                                       user={props.user}
                                                                        taskData={subtask}
                                                                        subtaskId={props.subtaskId}
                                                                        isChecked={subtask.completed}
