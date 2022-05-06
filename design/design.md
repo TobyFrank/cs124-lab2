@@ -27,7 +27,14 @@ For the fourth lab, we had to implement a number of changes for the addition of 
 <br>
 Furthermore, we made a ton of changes for accessibility. We made sure that all elements that were interactable could be tabbed through (including our filter dropdown menu), and that all the relevant objects were reachable in a nice way for screen readers. We renamed many of our elements to improve our descriptions and to make sure visually impaired (VI) or blind users could understand what tasks they were on contextually, and what tools they were using for which task (for instance, if you're on an edit button it will also tell you for what task you're editing). Plus we made it so that when you delete a task and the pop-up shows up that a user can only tab or use the screen-reader within the pop-up to click "Cancel" or "OK" (with additional context for screen readers).
 
-![To Do List Lab 4 Draft Image](To-Do-List-Lab4.jpg "To Do List Lab 4 Draft")
+Fifth Lab:
+
+When designing the final iteration of the lab, we wanted to create a log in and verification process that flowed with the rest of the site. We didn't change much of the overarching design by keeping the button styles and green color, and simply added pages for the log in and sign up process. We also added the email of the user on the top of the to do list and a log out button on the top right. One major thing we did change were the priority flags which were changed to exclamation points for a more clear priority ranking (via number of exclamation points) rather than colors which is more universale. We also added icons like share icons for users to share their tasks with other users.
+<br>
+Overall, we really thought about what types of rules for sharing made sense. We ultimately made it so that users could share their tasks. Shared users could edit tasks, add, and delete the subtasks they created, but they can not delete the subtasks they did not create nor can they delete or share the entire task itself. For a user to tell what user they're logged in as, there is an email at the very top of the screen for their reference. Furthermore, to tell if the task at hand is shared, there is a shared folder icon which replaces the share icon (since shared users can not share tasks that are not theirs).
+
+![To Do List Lab 5 Log In Image](design5-1.png "To Do List Lab 4 Draft")
+![To Do List Lab 5 Task Home Page Image](design5-2.png "To Do List Lab 4 Draft")
 <br>
 
 
@@ -51,6 +58,10 @@ Fourth Lab:
 
 The main design alternative was keeping the flag dropdown bar. However, we decided to go with clicks to change flag priority, which is a cleaner design with less clicks after conducting user testing.
 
+Fifth Lab:
+
+The biggest change was switching from priority flags to exclamation points for a more universally understood priority distinction. This came about as more users noted that the priority flag colors were not clear for identifying priority level. We also made numerous changes regarding understanding rules and what users and shared users should or should not be able to do. We realized that shared users should be able to edit and add tasks, since if Toby and I were to share a task list for CS124, we'd want to both be able to add, edit, and check tasks when completed.
+
 
 <br><br>
 ### 3. User Testing
@@ -70,6 +81,10 @@ We conducted even more user testing than usual this time around because of how u
 Fourth Lab:
 
 Our users were incredible. They questioned every design choice (like the aforementioned priority flags) and walking through the logic behind subtasks: how they're ordered, what happens when they're crossed, and when they should appear in the completed tag to name a few. Overall they were really impressed (again) to see how far we've come since Lab 1.
+
+Fifth Lab:
+
+We conducted user testing with over 5 people this time since this would be our final lab. We made users break our authorization/authentication system to help us determine permissions and what needed fixing. By making  many people walk through our verification, we were able to thoroughly test it and make sure it worked. We also fixed the priority flags (by changing them to the more universal form of priority levels) based on our renewed feedback. Overall, our users enjoyed using our To Do List app and they found it relatively intuitive.
 
 
 <br><br>
@@ -91,6 +106,10 @@ Fourth Lab:
 
 There were many features we wanted to implemented that we simply could not due to technical issues where we'd have to do a major overhaul of our code. For instance, we were so close to showing number of uncompleted subtasks over number of all subtasks for a task list. This was a user testing request and it was a challenge to the point that it was more important to ensure accessibility was working over cool features. Furthermore we had to restructure many flex and gridboxes due to the new sublists. Finally, we struggled with accessibility and correctly tabbing. Specifically, we had to ensure that our labels provided enough context to VI and blind users for them to know what tools they were using for what task (this was very important to us) and that navigating with tabs was intuitive.
 
+Fifth Lab:
+
+Our permissions were originally not working due to small bugs and errors that took us hours to find. We also ended up having to use compound indicies in order to filter and order our query, because we found out that we couldn't filter and order a query with two different files (an orderby and where have to use the same query). Other challenges includes generic CSS issues of trying to figure out why changes weren't updating or working as we wanted, which we figure out by trial and error.
+
 <br><br>
 ### 4. Parts of the design you're most proud of
 
@@ -109,3 +128,8 @@ The part of the lab we're most proud of is our filter. Getting the dropdown in t
 Fourth Lab:
 
 The part of the lab we're most proud of is our accessibility labelling. We saw that our priority flags weren't labelled (which meant that users couldn't tell what priority flag they had and if it was low/med/high), and that check buttons, editing buttons, delete buttons, were labelled but didn't tell a user which task they were applying these changes to. We think this was a nuanced issue of not providing context and we're glad we made sure we addressed it.
+
+Fifth Lab:
+
+We're proud of our verification system, both in terms of how it works on the back end and our reasoning for our rules, but also in regards to aesthetic looks on the front end. We're also glad we changed the priority flags to exclamation points since users had been talking about how confusing they were since lab one.
+
